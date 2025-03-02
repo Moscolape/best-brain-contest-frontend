@@ -32,7 +32,7 @@ const Contact: React.FC = () => {
     setStatus("Sending...");
     try {
       const response = await axios.post<{ message: string }>(
-        "http://localhost:5000/contact",
+        "https://best-brain-contest-backend.onrender.com/api/contact",
         data
       );
 
@@ -109,7 +109,7 @@ const Contact: React.FC = () => {
               Send Message
             </button>
           </form>
-          {status && <p className="mt-4 text-center">{status}</p>}
+          {status && <p className="mt-4 text-center text-green-700 font-medium">{status}</p>}
         </div>
 
         {/* Contact Details */}

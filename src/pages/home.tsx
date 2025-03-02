@@ -2,7 +2,7 @@ import PageWrapper from "../components/pageWrapper";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import initializeAOS from "../utils/aos-init";
-import { logo } from "../constants/assets";
+import { landingPage } from "../constants/assets";
 
 
 const texts = [
@@ -20,7 +20,7 @@ const Home = () => {
 
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % texts.length);
-    }, 8000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, []);
@@ -31,7 +31,7 @@ const Home = () => {
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${logo})` }}
+          style={{ backgroundImage: `url(${landingPage})` }}
         ></div>
 
         {/* Overlay */}

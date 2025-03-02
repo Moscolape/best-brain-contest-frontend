@@ -50,13 +50,9 @@ export default function Footer() {
     <div className="w-full bg-[#071125] text-white text-body1 mt-20">
       <div className="flex sm:flex-row flex-col justify-between items-start sm:p-6 p-3">
         <div className="sm:w-1/3" data-aos = "fade-up">
-          <h1 className="text-2xl">ABOUT US</h1>
+          <h1 className="text-2xl">LOCATE US</h1>
           <br />
-          <p>
-            Best Brain Contest specializes in organizing Quiz Competition,
-            Scholarships Exams, Spelling Bee etc.
-          </p>
-          <div className="mt-10 flex items-center">
+          <div className="flex items-center">
             <FaMapMarkerAlt className="text-white text-5xl mr-2" />
             <p>
               Suite B6 Millennium Plaza by Total Filling Station, Aroma

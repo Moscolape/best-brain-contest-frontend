@@ -54,7 +54,7 @@ export default function NavLinks() {
     };
   }, [isMenuOpen]);
 
-  const logoSize = windowWidth < 640 ? 50 : 80;
+  const logoSize = windowWidth < 640 ? 60 : 80;
 
   return (
     <nav className="flex justify-between items-center sm:px-4 sm:py-2 fixed w-full top-0 z-50 bg-white shadow-md">

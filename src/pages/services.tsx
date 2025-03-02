@@ -74,6 +74,7 @@ const Services = () => {
               <div
                 className="flex flex-col justify-center items-center"
                 data-aos={`${index % 2 == 0 ? "fade-up" : "fade-down"}`}
+                key={index}
               >
                 <img src={service.pic} alt="undraw" className="w-30 h-30" />
                 <h1 className="text-2xl font-bold font-Montserrat my-5">
