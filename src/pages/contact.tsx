@@ -74,7 +74,7 @@ const Contact: React.FC = () => {
               {...register("name", { required: "Name is required" })}
               placeholder="Your Name"
               className="w-full p-2 border rounded placeholder:text-gray-400"
-              data-aos="fade-down" data-aos-delay={1000}
+              data-aos="fade-in" data-aos-delay={1000}
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
               {...register("email", { required: "Email is required" })}
               placeholder="Your Email"
               className="w-full p-2 border rounded placeholder:text-gray-400"
-              data-aos="fade-down" data-aos-delay={1000}
+              data-aos="fade-in" data-aos-delay={1000}
             />
             {errors.email && (
               <p className="text-red-500">{errors.email.message}</p>
@@ -96,7 +96,7 @@ const Contact: React.FC = () => {
               placeholder="Your Message"
               className="w-full p-2 border rounded resize-none placeholder:text-gray-400"
               rows={8}
-              data-aos="fade-down" data-aos-delay={1000}
+              data-aos="fade-in" data-aos-delay={1000}
             />
             {errors.message && (
               <p className="text-red-500">{errors.message.message}</p>

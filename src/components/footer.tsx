@@ -68,8 +68,6 @@ export default function Footer() {
               <Link
                 to={link.href}
                 key={index}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="mb-2 text-[1rem] hover:text-[#be9611] hover:scale-105"
               >
                 {link.text}

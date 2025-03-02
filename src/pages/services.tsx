@@ -2,7 +2,7 @@ import PageWrapper from "../components/pageWrapper";
 import { useEffect } from "react";
 import initializeAOS from "../utils/aos-init";
 import {
-  services,
+//   services,
   undrawDebate,
   undrawQuiz,
   undrawScholarship,
@@ -51,17 +51,17 @@ const Services = () => {
 
   return (
     <PageWrapper>
-      <div className="relative sm:h-[30rem] h-[15rem] sm:mt-0 -mt-10 w-full flex flex-col items-center justify-center text-white">
+      {/* <div className="relative sm:h-[30rem] h-[15rem] sm:mt-0 -mt-10 w-full flex flex-col items-center justify-center text-white"> */}
         {/* Background Image */}
-        <div
+        {/* <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${services})` }}
-        ></div>
+        ></div> */}
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-      </div>
-      <div className="w-[90%] mx-auto my-20">
+        {/* <div className="absolute inset-0 bg-black opacity-40"></div> */}
+      {/* </div> */}
+      <div className="w-[90%] mx-auto sm:my-40">
         <h1
           className="text-[#071125] text-5xl text-center font-semibold font-Script"
           data-aos="flip-up"

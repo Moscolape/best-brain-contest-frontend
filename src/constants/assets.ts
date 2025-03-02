@@ -7,6 +7,8 @@ import undrawSpelling from "../assets/undraw_spelling_balr.svg";
 import undrawSeminar from "../assets/undraw_seminar_3n82.svg";
 import undrawSkills from "../assets/undraw_skill-acquisition-_dn7p.svg";
 import landingPage from "../assets/bestbrainlanding.jpeg";
+import CEO from "../assets/CEO.png";
+
 
 export {
   logo,
@@ -17,5 +19,6 @@ export {
   undrawSeminar,
   undrawSkills,
   undrawSpelling,
-  landingPage
+  landingPage,
+  CEO
 };
