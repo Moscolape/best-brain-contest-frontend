@@ -116,7 +116,7 @@ const Home = () => {
         <img
           src={bestlanding}
           alt=""
-          className="w-[80%] mx-auto scale-75"
+          className="w-[80%] mx-auto"
           data-aos="fade-up"
         />
       </div>

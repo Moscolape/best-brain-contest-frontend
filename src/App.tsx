@@ -10,6 +10,9 @@ const Programs = lazy(() => import("./pages/programs"));
 const Blog = lazy(() => import("./pages/blog"));
 const Contact = lazy(() => import("./pages/contact"));
 const Gallery = lazy(() => import("./pages/gallery"));
+const TeachersForm = lazy(
+  () => import("./components/teachers-registration-form")
+);
 
 function App() {
   return (
@@ -29,6 +32,11 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/gallery" element={<Gallery />} />
+
+          <Route
+            path="/programs/astc-registration-form"
+            element={<TeachersForm />}
+          />
         </Routes>
       </Router>
     </Suspense>

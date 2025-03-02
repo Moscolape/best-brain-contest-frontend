@@ -59,7 +59,7 @@ export default function NavLinks() {
   const logoSize = windowWidth < 640 ? 60 : 80;
 
   return (
-    <nav className="flex justify-between items-center sm:px-4 sm:py-2 fixed w-full top-0 z-50 bg-white shadow-md">
+    <nav className="flex justify-between items-center sm:px-4 py-2 fixed w-full top-0 z-50 bg-white shadow-md">
       <Link to="/" className="logo">
         <img
           src="/BBC LOGO.png"
@@ -76,7 +76,7 @@ export default function NavLinks() {
             key={link.name}
             to={link.href}
             className={`px-4 py-2 text-h6 hover:text-[#be9611] hover:scale-110 rounded-md ${
-              currentPath === link.href
+              currentPath.includes(link.href)
                 ? "text-[#be9611] font-bold"
                 : "text-[#071125] font-medium"
             }`}
