@@ -1,6 +1,7 @@
 import PageWrapper from "../components/pageWrapper";
 import { useEffect } from "react";
 import initializeAOS from "../utils/aos-init";
+import { notAvailableYet } from "../constants/assets";
 
 const Programs = () => {
   useEffect(() => {
@@ -9,7 +10,10 @@ const Programs = () => {
 
   return (
     <PageWrapper>
-      <div>Programs</div>
+      <div className="flex flex-col justify-center items-center my-5 h-[60vh]">
+        <img src={notAvailableYet} alt="no-data" className="w-30 h-30" />
+        <span className="block my-4">No programs added yet</span>
+      </div>
     </PageWrapper>
   );
 };

@@ -7,7 +7,7 @@ const links = [
   { name: "About", href: "/about" },
   { name: "Services", href: "/services" },
   { name: "Programs", href: "/programs" },
-//   { name: "Gallery", href: "/gallery" },
+  //   { name: "Gallery", href: "/gallery" },
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
@@ -15,7 +15,9 @@ const links = [
 export default function NavLinks() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [currentPath, setCurrentPath] = useState<string>(window.location.pathname);
+  const [currentPath, setCurrentPath] = useState<string>(
+    window.location.pathname
+  );
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -59,7 +61,12 @@ export default function NavLinks() {
   return (
     <nav className="flex justify-between items-center sm:px-4 sm:py-2 fixed w-full top-0 z-50 bg-white shadow-md">
       <Link to="/" className="logo">
-        <img src="/BBC LOGO.png" alt="My Logo" width={logoSize} height={logoSize} />
+        <img
+          src="/BBC LOGO.png"
+          alt="My Logo"
+          width={logoSize}
+          height={logoSize}
+        />
       </Link>
 
       {/* Desktop Navigation */}
@@ -69,7 +76,9 @@ export default function NavLinks() {
             key={link.name}
             to={link.href}
             className={`px-4 py-2 text-h6 hover:text-[#be9611] hover:scale-110 rounded-md ${
-              currentPath === link.href ? "text-[#be9611] font-bold" : "text-[#071125] font-medium"
+              currentPath === link.href
+                ? "text-[#be9611] font-bold"
+                : "text-[#071125] font-medium"
             }`}
           >
             {link.name}
@@ -78,7 +87,10 @@ export default function NavLinks() {
       </div>
 
       {/* Mobile Menu Button */}
-      <button onClick={() => setMenuOpen(true)} className="md:hidden p-2 rounded-md focus:outline-none">
+      <button
+        onClick={() => setMenuOpen(true)}
+        className="md:hidden p-2 rounded-md focus:outline-none"
+      >
         <Menu size={32} />
       </button>
 
@@ -90,11 +102,14 @@ export default function NavLinks() {
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className="fixed inset-0 bg-white bg-opacity-90 z-50 flex flex-col items-center justify-center text-black"
       >
-        <button onClick={() => setMenuOpen(false)} className="absolute top-3 right-3">
+        <button
+          onClick={() => setMenuOpen(false)}
+          className="absolute top-3 right-3"
+        >
           <X size={40} className="text-black" />
         </button>
 
-        <div className="space-y-6 text-center flex flex-col justify-center">
+        <div className="space-y-6 text-center flex flex-col justify-center font-Urbanist">
           {links.map((link) => (
             <Link
               key={link.name}

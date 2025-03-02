@@ -25,19 +25,6 @@ const About = () => {
           Welcome to <strong>Best Brain Contest!</strong>
         </p>
 
-        {/* Introduction */}
-        <div className="mb-15 font-Montserrat" data-aos="fade-up">
-          <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
-          <p className="text-gray-700">
-            Best Brain Contest is a{" "}
-            <b>non-governmental educational organization</b> dedicated to
-            empowering students through a variety of educational initiatives,
-            including scholarship programs, quiz competitions, spelling bees,
-            and more. <b>Our mission</b> is to make quality education accessible
-            to all, nurturing the minds of future leaders and innovators.
-          </p>
-        </div>
-
         {/* Vision Section */}
         <div className="mb-15 font-Montserrat" data-aos="fade-up">
           <h2 className="text-2xl font-semibold mb-4">Our Vision</h2>
