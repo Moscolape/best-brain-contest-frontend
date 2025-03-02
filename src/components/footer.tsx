@@ -50,7 +50,7 @@ export default function Footer() {
     <div className="w-full bg-[#071125] text-white text-body1 mt-20">
       <div className="flex sm:flex-row flex-col justify-between items-start sm:p-6 p-3">
         <div className="sm:w-1/3" data-aos = "fade-up">
-          <h1 className="text-2xl">LOCATE US</h1>
+          <h1 className="text-lg">LOCATE US</h1>
           <br />
           <div className="flex items-center">
             <FaMapMarkerAlt className="text-white text-5xl mr-2" />
@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="sm:w-1/3 sm:mt-0 mt-10" data-aos = "fade-down">
-          <h1 className="text-2xl">QUICK LINKS</h1>
+          <h1 className="text-lg">QUICK LINKS</h1>
           <br />
           <div className="flex flex-col">
             {quickLinks.map((link, index) => (
