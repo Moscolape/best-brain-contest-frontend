@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + TailwindCSS
 
 ### New official website for best brain contest 
 
