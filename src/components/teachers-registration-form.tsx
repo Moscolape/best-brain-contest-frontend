@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PageWrapper from "./pageWrapper";
+
 
 interface FormData {
   name: string;
@@ -23,6 +24,7 @@ interface FormData {
   certifications: string;
   motivation: string;
   declaration: boolean;
+  uploadPassport: File;
 }
 
 const TeachersRegistrationForm: React.FC = () => {
@@ -32,8 +34,22 @@ const TeachersRegistrationForm: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
+  };
+
+  // Handle image preview
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        alert("File size must be less than 1MB");
+        return;
+      }
+      setPreviewImage(URL.createObjectURL(file));
+    }
   };
 
   return (
@@ -72,9 +88,8 @@ const TeachersRegistrationForm: React.FC = () => {
             className="w-full p-3 border rounded-lg"
           >
             <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
           {errors.gender && (
             <p className="text-red-500">{errors.gender.message}</p>
@@ -119,6 +134,9 @@ const TeachersRegistrationForm: React.FC = () => {
             placeholder="School Name"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.schoolName && (
+            <p className="text-red-500">{errors.schoolName.message}</p>
+          )}
 
           <label htmlFor="">Address of school</label>
           <input
@@ -128,6 +146,9 @@ const TeachersRegistrationForm: React.FC = () => {
             placeholder="School Address"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.schoolAddress && (
+            <p className="text-red-500">{errors.schoolAddress.message}</p>
+          )}
 
           <label htmlFor="">L.G.A School Resides In</label>
           <input
@@ -137,23 +158,30 @@ const TeachersRegistrationForm: React.FC = () => {
             placeholder="LGA"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.lga && <p className="text-red-500">{errors.lga.message}</p>}
 
           <label htmlFor="">Phone Number of Contact Person</label>
           <input
-            {...register("phoneNumber", {
+            {...register("contactPhone", {
               required: "Phone number is required",
             })}
             placeholder="Phone number"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.contactPhone && (
+            <p className="text-red-500">{errors.contactPhone.message}</p>
+          )}
 
           <label htmlFor="">School's Official Email Address</label>
           <input
             type="email"
-            {...register("email", { required: "Email is required" })}
+            {...register("contactEmail", { required: "Email is required" })}
             placeholder="School Email"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.contactEmail && (
+            <p className="text-red-500">{errors.contactEmail.message}</p>
+          )}
 
           <h2 className="text-xl font-bold mt-6 mb-4">Teaching Details</h2>
 
@@ -163,6 +191,9 @@ const TeachersRegistrationForm: React.FC = () => {
             placeholder="Subject Taught"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.subjectTaught && (
+            <p className="text-red-500">{errors.subjectTaught.message}</p>
+          )}
 
           <label htmlFor="">How Many Years Have You Been A Teacher?</label>
           <input
@@ -174,6 +205,9 @@ const TeachersRegistrationForm: React.FC = () => {
             placeholder="Years of Experience"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.yearsOfExperience && (
+            <p className="text-red-500">{errors.yearsOfExperience.message}</p>
+          )}
 
           <label htmlFor="">What's Your Current Position?</label>
           <input
@@ -183,6 +217,9 @@ const TeachersRegistrationForm: React.FC = () => {
             placeholder="Current Position"
             className="w-full p-3 border rounded-lg"
           />
+          {errors.currentPosition && (
+            <p className="text-red-500">{errors.currentPosition.message}</p>
+          )}
 
           <h2 className="text-xl font-bold mt-6 mb-4">Competition Category</h2>
 
@@ -229,6 +266,38 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.motivation.message}</p>
           )}
 
+          {/* File Upload Section */}
+          <div className="mb-4 mt-6">
+            <h2 className="text-xl font-bold">Upload Passport</h2>
+            <span className="text-gray-500 text-sm">
+              Passport should not be more than 1MB
+            </span>
+          </div>
+          <input
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            {...register("uploadPassport", {
+              required: "Passport is required",
+            })}
+            className="w-full p-2 border rounded-lg"
+            onChange={handleImageChange}
+          />
+          {errors.uploadPassport && (
+            <p className="text-red-500">{errors.uploadPassport.message}</p>
+          )}
+
+          {/* Image Preview */}
+          {previewImage && (
+            <div>
+              <p className="font-medium mb-2">Image Preview:</p>
+              <img
+                src={previewImage}
+                alt="Passport Preview"
+                className="w-32 h-32 object-cover"
+              />
+            </div>
+          )}
+
           <h2 className="text-xl font-bold mt-6 mb-4">Declaration</h2>
           <label className="flex items-center">
             <input
@@ -248,9 +317,13 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <h2 className="text-xl font-bold mt-6 mb-4">Feedback</h2>
           <p>
-            For feedback and more information about the competition and Best
-            Brain Contest, follow us on our Facebook Pages below;
+            For feedback and more information about the competition, click to follow us on any of our Facebook Pages below;
           </p>
+          <div>
+            <a href={'https://www.facebook.com/share/18LvqCJULT/'} target="_blank">@Best Brain Contest</a>
+            <a href={'https://www.facebook.com/franklyn.akpoazaa/'} target="_blank" className="inline-block mx-3">@Frank Igbojindu</a>
+            <a href={'https://www.facebook.com/share/19Cu6XfYJ3/'} target="_blank">@Akpoazaa Foundation</a>
+          </div>
 
           <button
             type="submit"
