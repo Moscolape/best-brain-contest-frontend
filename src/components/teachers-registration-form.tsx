@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PageWrapper from "./pageWrapper";
-
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   name: string;
-  gender: "Male" | "Female" | "Other";
+  gender: "Male" | "Female";
   dob: string;
   phoneNumber: string;
   email: string;
@@ -31,26 +31,63 @@ const TeachersRegistrationForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-  };
+  const navigate = useNavigate();
 
-  // Handle image preview
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 1024 * 1024) {
-        alert("File size must be less than 1MB");
-        return;
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      setIsSubmitting(true);
+      const formData = new FormData();
+  
+      // Append all form fields **except the file**
+      Object.entries(data).forEach(([key, value]) => {
+        if (key !== "uploadPassport") {
+          formData.append(key, value as string);
+        }
+      });
+  
+      // Append the file correctly (Expecting a File, not a FileList)
+      if (data.uploadPassport instanceof File) {
+        formData.append("uploadPassport", data.uploadPassport);
+      } else {
+        console.error("File not selected or invalid!", data.uploadPassport);
+        return alert("Please select a valid passport image.");
       }
-      setPreviewImage(URL.createObjectURL(file));
+  
+      console.log("FormData Entries:", [...formData.entries()]);
+  
+      const response = await fetch("https://best-brain-contest-backend.onrender.com/api/register", {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        console.error("Backend Error:", errorResponse);
+        throw new Error(errorResponse.message || "Failed to register.");
+      }
+  
+      const result = await response.json();
+      alert("Registration successful!");
+      console.log(result);
+      reset();
+      navigate('/');
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
+  
+  
 
   return (
     <PageWrapper>
@@ -88,8 +125,8 @@ const TeachersRegistrationForm: React.FC = () => {
             className="w-full p-3 border rounded-lg"
           >
             <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
           {errors.gender && (
             <p className="text-red-500">{errors.gender.message}</p>
@@ -275,13 +312,16 @@ const TeachersRegistrationForm: React.FC = () => {
           </div>
           <input
             type="file"
-            accept="image/png, image/jpeg, image/jpg"
-            {...register("uploadPassport", {
-              required: "Passport is required",
-            })}
-            className="w-full p-2 border rounded-lg"
-            onChange={handleImageChange}
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setPreviewImage(URL.createObjectURL(file));
+                setValue("uploadPassport", file);
+              }
+            }}
           />
+
           {errors.uploadPassport && (
             <p className="text-red-500">{errors.uploadPassport.message}</p>
           )}
@@ -317,19 +357,38 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <h2 className="text-xl font-bold mt-6 mb-4">Feedback</h2>
           <p>
-            For feedback and more information about the competition, click to follow us on any of our Facebook Pages below;
+            For feedback and more information about the competition, click to
+            follow us on any of our Facebook Pages below;
           </p>
           <div>
-            <a href={'https://www.facebook.com/share/18LvqCJULT/'} target="_blank">@Best Brain Contest</a>
-            <a href={'https://www.facebook.com/franklyn.akpoazaa/'} target="_blank" className="inline-block mx-3">@Frank Igbojindu</a>
-            <a href={'https://www.facebook.com/share/19Cu6XfYJ3/'} target="_blank">@Akpoazaa Foundation</a>
+            <a
+              href={"https://www.facebook.com/share/18LvqCJULT/"}
+              target="_blank"
+              className="text-blue-600 font-bold"
+            >
+              @Best Brain Contest
+            </a>
+            <a
+              href={"https://www.facebook.com/franklyn.akpoazaa/"}
+              target="_blank"
+              className="inline-block mx-3 text-blue-600 font-bold"
+            >
+              @Frank Igbojindu
+            </a>
+            <a
+              href={"https://www.facebook.com/share/19Cu6XfYJ3/"}
+              target="_blank"
+              className="text-blue-600 font-bold"
+            >
+              @Akpoazaa Foundation
+            </a>
           </div>
 
           <button
             type="submit"
             className="w-full bg-[#071125] text-white hover:text-[#be9611] p-3 rounded-lg cursor-pointer animate-hop mt-4"
           >
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </form>
       </div>
