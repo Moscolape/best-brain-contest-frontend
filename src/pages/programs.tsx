@@ -149,7 +149,7 @@ const Programs = () => {
                         return (
                           <div key={itemIndex} className="mb-3">
                             {isTeachers ? (
-                              <Link to="/programs/astc-registration-form">
+                              <Link to="/programs/anambra-state-teachers-competition-registration-form">
                                 <h4
                                   className="text-sm font-medium text-blue-600 underline cursor-pointer"
                                   data-aos="fade-up"

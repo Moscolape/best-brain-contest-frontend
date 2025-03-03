@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PageWrapper from "./pageWrapper";
 import { useNavigate } from "react-router-dom";
+import Marquee from "react-fast-marquee";
 
 interface FormData {
   name: string;
@@ -45,14 +46,14 @@ const TeachersRegistrationForm: React.FC = () => {
     try {
       setIsSubmitting(true);
       const formData = new FormData();
-  
+
       // Append all form fields **except the file**
       Object.entries(data).forEach(([key, value]) => {
         if (key !== "uploadPassport") {
           formData.append(key, value as string);
         }
       });
-  
+
       // Append the file correctly (Expecting a File, not a FileList)
       if (data.uploadPassport instanceof File) {
         formData.append("uploadPassport", data.uploadPassport);
@@ -60,25 +61,28 @@ const TeachersRegistrationForm: React.FC = () => {
         console.error("File not selected or invalid!", data.uploadPassport);
         return alert("Please select a valid passport image.");
       }
-  
+
       console.log("FormData Entries:", [...formData.entries()]);
-  
-      const response = await fetch("https://best-brain-contest-backend.onrender.com/api/register", {
-        method: "POST",
-        body: formData,
-      });
-  
+
+      const response = await fetch(
+        "https://best-brain-contest-backend.onrender.com/api/register",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
       if (!response.ok) {
         const errorResponse = await response.json();
         console.error("Backend Error:", errorResponse);
         throw new Error(errorResponse.message || "Failed to register.");
       }
-  
+
       const result = await response.json();
       alert("Registration successful!");
       console.log(result);
       reset();
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred. Please try again.");
@@ -86,8 +90,6 @@ const TeachersRegistrationForm: React.FC = () => {
       setIsSubmitting(false);
     }
   };
-  
-  
 
   return (
     <PageWrapper>
@@ -96,10 +98,21 @@ const TeachersRegistrationForm: React.FC = () => {
           className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
           data-aos="fade-left"
         >
-          Teachers Registration Form
+          2025 ANAMBRA STATE TEACHERS COMPETITION
         </h2>
+        <h2
+          className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
+          data-aos="fade-left"
+        >
+          Registration Form
+        </h2>
+        <Marquee className="font-Montserrat font-bold my-5">
+          <span className="pr-60">
+            THIS FORM IS <span className="text-red-700">NOT FOR SALE!!</span>
+          </span>
+        </Marquee>{" "}
         <p
-          className="text-gray-800 font-Urbanist"
+          className="text-gray-800 font-Urbanist mt-2"
           data-aos="fade-left"
           data-aos-delay={500}
         >
@@ -134,8 +147,9 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <label htmlFor="">Date of Birth</label>
           <input
-            type="date"
+            type="text"
             {...register("dob", { required: "Date of Birth is required" })}
+            placeholder="DD-MM-YYYY e.g 30-01-1985"
             className="w-full p-3 border rounded-lg"
           />
           {errors.dob && <p className="text-red-500">{errors.dob.message}</p>}
@@ -187,14 +201,42 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.schoolAddress.message}</p>
           )}
 
-          <label htmlFor="">L.G.A School Resides In</label>
-          <input
+          <label htmlFor="lga">L.G.A School Resides In</label>
+          <select
             {...register("lga", {
               required: "Local Government Area is required",
             })}
-            placeholder="LGA"
             className="w-full p-3 border rounded-lg"
-          />
+          >
+            <option value="">Select LGA</option>
+            {[
+              "Aguata",
+              "Anambra East",
+              "Anambra West",
+              "Anaocha",
+              "Awka North",
+              "Awka South",
+              "Ayamelum",
+              "Dunukofia",
+              "Ekwusigo",
+              "Idemili North",
+              "Idemili South",
+              "Ihiala",
+              "Njikoka",
+              "Nnewi North",
+              "Nnewi South",
+              "Ogbaru",
+              "Onitsha North",
+              "Onitsha South",
+              "Orumba North",
+              "Orumba South",
+              "Oyi",
+            ].map((lga) => (
+              <option key={lga} value={lga}>
+                {lga}
+              </option>
+            ))}
+          </select>
           {errors.lga && <p className="text-red-500">{errors.lga.message}</p>}
 
           <label htmlFor="">Phone Number of Contact Person</label>
