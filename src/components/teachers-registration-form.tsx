@@ -399,12 +399,12 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <h2 className="text-xl font-bold mt-6 mb-4">Feedback</h2>
           <p>
-            For feedback and more information about the competition, call/chat
+            For feedback and more information about the competition, chat
             us on WhatsApp via{" "}
-            <Link to={"https://wa.me/+2347030555581"} target="_blank" className="text-blue-800 font-medium">
-              0703 055 5581
+            <Link to={"https://wa.me/+2347077145544"} target="_blank" className="text-blue-800 font-medium">
+              0707 714 5544
             </Link>{" "}
-            or click to follow us on any of our Facebook Pages below;
+            or click to follow us on all the Facebook Pages below;
           </p>
           <div>
             <a
