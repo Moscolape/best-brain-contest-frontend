@@ -16,6 +16,9 @@ import {
   guest6,
   guest7,
   landingPage,
+  landingPage2,
+  landingPage3,
+  landingPage4,
   school1,
   school2,
   school3,
@@ -44,7 +47,14 @@ const texts = [
 
 const Home = () => {
   const [index, setIndex] = useState(0);
+  const [bgIndex, setBgIndex] = useState(0);
 
+  const backgroundImages = [
+    landingPage,
+    landingPage2,
+    landingPage3,
+    landingPage4,
+  ];
   const slider1 = [flier1, flier2, flier3];
   const slider2 = [guest1, guest2, guest3, guest4, guest5, guest6, guest7];
   const slider3 = [
@@ -63,21 +73,37 @@ const Home = () => {
   useEffect(() => {
     initializeAOS();
 
+    // Text sliding interval
     const textInterval = setInterval(() => {
       setIndex((prev) => (prev + 1) % texts.length);
     }, 8000);
 
-    return () => clearInterval(textInterval);
-  }, []);
+    // Background image slider interval
+    const bgInterval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % backgroundImages.length);
+    }, 8000);
+
+    return () => {
+      clearInterval(textInterval);
+      clearInterval(bgInterval);
+    };
+  }, [backgroundImages.length]);
 
   return (
     <PageWrapper>
-      <div className="relative sm:h-[30rem] h-[15rem] sm:mt-0 -mt-10 w-full flex flex-col items-center justify-center text-white">
+      <div className="relative sm:h-[30rem] h-[20rem] sm:mt-0 -mt-10 w-full flex flex-col items-center justify-center text-white">
         {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${landingPage})` }}
-        ></div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={bgIndex}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${backgroundImages[bgIndex]})` }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+          />
+        </AnimatePresence>
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -95,9 +121,9 @@ const Home = () => {
               <motion.p
                 key={index}
                 className="text-lg md:text-6xl font-Montserrat"
-                initial={{ x: "-100%", opacity: 0 }}
+                initial={{ x: "-100%", opacity: 1 }}
                 animate={{ x: 0, opacity: 1 }}
-                exit={{ x: "100%", opacity: 0 }}
+                exit={{ x: "100%", opacity: 1 }}
                 transition={{ duration: 2, ease: "easeInOut" }}
               >
                 {texts[index]}

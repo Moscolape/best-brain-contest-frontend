@@ -39,7 +39,7 @@ const ImageSlider: React.FC<SliderProps> = ({ images, interval = 3000, title }) 
         <img
           src={images[imageIndex]}
           alt={`Slide ${imageIndex + 1}`}
-          className="w-full sm:h-[30rem] h-[15rem] rounded-lg shadow-lg"
+          className="w-full sm:h-[30rem] h-[20rem] rounded-lg shadow-lg"
         />
 
         <button

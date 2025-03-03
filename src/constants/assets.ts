@@ -7,6 +7,9 @@ import undrawSpelling from "../assets/undraw_spelling_balr.svg";
 import undrawSeminar from "../assets/undraw_seminar_3n82.svg";
 import undrawSkills from "../assets/undraw_skill-acquisition-_dn7p.svg";
 import landingPage from "../assets/bestbrainlanding.jpeg";
+import landingPage2 from "../assets/bg1.jpeg";
+import landingPage3 from "../assets/bg2.jpeg";
+import landingPage4 from "../assets/bg3.jpeg";
 import CEO from "../assets/CEO.png";
 import bestlanding from "../assets/best-landing.jpeg";
 import flier1 from "../assets/flier1.jpeg";
@@ -47,6 +50,9 @@ export {
   undrawSkills,
   undrawSpelling,
   landingPage,
+  landingPage2,
+  landingPage3,
+  landingPage4,
   CEO,
   bestlanding,
   flier1,

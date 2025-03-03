@@ -58,6 +58,7 @@ const TeachersRegistrationForm: React.FC = () => {
           <h2 className="text-xl font-bold mt-6 mb-4">
             Participant's Information
           </h2>
+          <label htmlFor="">Full Name</label>
           <input
             {...register("name", { required: "Name is required" })}
             placeholder="Full Name"
@@ -65,6 +66,7 @@ const TeachersRegistrationForm: React.FC = () => {
           />
           {errors.name && <p className="text-red-500">{errors.name.message}</p>}
 
+          <label htmlFor="">Gender</label>
           <select
             {...register("gender", { required: "Gender is required" })}
             className="w-full p-3 border rounded-lg"
@@ -78,6 +80,7 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.gender.message}</p>
           )}
 
+          <label htmlFor="">Date of Birth</label>
           <input
             type="date"
             {...register("dob", { required: "Date of Birth is required" })}
@@ -85,6 +88,7 @@ const TeachersRegistrationForm: React.FC = () => {
           />
           {errors.dob && <p className="text-red-500">{errors.dob.message}</p>}
 
+          <label htmlFor="">Phone Number</label>
           <input
             {...register("phoneNumber", {
               required: "Phone number is required",
@@ -96,6 +100,7 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.phoneNumber.message}</p>
           )}
 
+          <label htmlFor="">Email Address</label>
           <input
             type="email"
             {...register("email", { required: "Email is required" })}
@@ -107,12 +112,15 @@ const TeachersRegistrationForm: React.FC = () => {
           )}
 
           <h2 className="text-xl font-bold mt-6 mb-4">School Information</h2>
+
+          <label htmlFor="">Name of School</label>
           <input
             {...register("schoolName", { required: "School name is required" })}
             placeholder="School Name"
             className="w-full p-3 border rounded-lg"
           />
 
+          <label htmlFor="">Address of school</label>
           <input
             {...register("schoolAddress", {
               required: "School address is required",
@@ -121,6 +129,7 @@ const TeachersRegistrationForm: React.FC = () => {
             className="w-full p-3 border rounded-lg"
           />
 
+          <label htmlFor="">L.G.A School Resides In</label>
           <input
             {...register("lga", {
               required: "Local Government Area is required",
@@ -129,14 +138,16 @@ const TeachersRegistrationForm: React.FC = () => {
             className="w-full p-3 border rounded-lg"
           />
 
+          <label htmlFor="">Phone Number of Contact Person</label>
           <input
             {...register("phoneNumber", {
               required: "Phone number is required",
             })}
-            placeholder="Phone number of contact person"
+            placeholder="Phone number"
             className="w-full p-3 border rounded-lg"
           />
 
+          <label htmlFor="">School's Official Email Address</label>
           <input
             type="email"
             {...register("email", { required: "Email is required" })}
@@ -145,12 +156,15 @@ const TeachersRegistrationForm: React.FC = () => {
           />
 
           <h2 className="text-xl font-bold mt-6 mb-4">Teaching Details</h2>
+
+          <label htmlFor="">What Subject Do You Teach? (enter only one)</label>
           <input
             {...register("subjectTaught", { required: "Subject is required" })}
             placeholder="Subject Taught"
             className="w-full p-3 border rounded-lg"
           />
 
+          <label htmlFor="">How Many Years Have You Been A Teacher?</label>
           <input
             type="number"
             {...register("yearsOfExperience", {
@@ -161,6 +175,7 @@ const TeachersRegistrationForm: React.FC = () => {
             className="w-full p-3 border rounded-lg"
           />
 
+          <label htmlFor="">What's Your Current Position?</label>
           <input
             {...register("currentPosition", {
               required: "Position is required",
@@ -170,6 +185,8 @@ const TeachersRegistrationForm: React.FC = () => {
           />
 
           <h2 className="text-xl font-bold mt-6 mb-4">Competition Category</h2>
+
+          <label htmlFor="">What Category Do You Want To Compete In?</label>
           <select
             {...register("competitionCategory", {
               required: "Select a category",
@@ -198,7 +215,7 @@ const TeachersRegistrationForm: React.FC = () => {
             {...register("certifications", {
               required: "Certification is not required",
             })}
-            placeholder="Start work here if there is..."
+            placeholder="List any relevant certifications/awards (if any)"
             className="w-full p-3 border rounded-lg resize-none"
             rows={5}
           />
@@ -222,11 +239,18 @@ const TeachersRegistrationForm: React.FC = () => {
               className="mr-2"
             />
             I hereby declare that the information provided is accurate to the
-            best of my knowledge.
+            best of my knowledge. I understand that any false information may
+            lead to disqualification.
           </label>
           {errors.declaration && (
             <p className="text-red-500">{errors.declaration.message}</p>
           )}
+
+          <h2 className="text-xl font-bold mt-6 mb-4">Feedback</h2>
+          <p>
+            For feedback and more information about the competition and Best
+            Brain Contest, follow us on our Facebook Pages below;
+          </p>
 
           <button
             type="submit"
