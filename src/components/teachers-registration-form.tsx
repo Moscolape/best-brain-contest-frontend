@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PageWrapper from "./pageWrapper";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 
 interface FormData {
@@ -399,28 +399,32 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <h2 className="text-xl font-bold mt-6 mb-4">Feedback</h2>
           <p>
-            For feedback and more information about the competition, click to
-            follow us on any of our Facebook Pages below;
+            For feedback and more information about the competition, call/chat
+            us on WhatsApp via{" "}
+            <Link to={"https://wa.me/+2347030555581"} target="_blank" className="text-blue-800 font-medium">
+              0703 055 5581
+            </Link>{" "}
+            or click to follow us on any of our Facebook Pages below;
           </p>
           <div>
             <a
               href={"https://www.facebook.com/share/18LvqCJULT/"}
               target="_blank"
-              className="text-blue-600 font-bold"
+              className="text-blue-800 font-bold"
             >
               @Best Brain Contest
             </a>
             <a
               href={"https://www.facebook.com/franklyn.akpoazaa/"}
               target="_blank"
-              className="inline-block mx-3 text-blue-600 font-bold"
+              className="inline-block mx-3 text-blue-800 font-bold"
             >
               @Frank Igbojindu
             </a>
             <a
               href={"https://www.facebook.com/share/19Cu6XfYJ3/"}
               target="_blank"
-              className="text-blue-600 font-bold"
+              className="text-blue-800 font-bold"
             >
               @Akpoazaa Foundation
             </a>
