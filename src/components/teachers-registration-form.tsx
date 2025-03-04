@@ -154,7 +154,7 @@ const TeachersRegistrationForm: React.FC = () => {
           />
           {errors.dob && <p className="text-red-500">{errors.dob.message}</p>}
 
-          <label htmlFor="">Phone Number</label>
+          <label htmlFor="">Phone Number (WhatsApp)</label>
           <input
             {...register("phoneNumber", {
               required: "Phone number is required",
@@ -239,7 +239,7 @@ const TeachersRegistrationForm: React.FC = () => {
           </select>
           {errors.lga && <p className="text-red-500">{errors.lga.message}</p>}
 
-          <label htmlFor="">Phone Number of Contact Person</label>
+          <label htmlFor="">Phone Number of Contact Person (WhatsApp)</label>
           <input
             {...register("contactPhone", {
               required: "Phone number is required",
@@ -404,7 +404,7 @@ const TeachersRegistrationForm: React.FC = () => {
             <Link to={"https://wa.me/+2347077145544"} target="_blank" className="text-blue-800 font-medium">
               0707 714 5544
             </Link>{" "}
-            or click to follow us on all the Facebook Pages below;
+            and click to follow us on all the Facebook Pages below;
           </p>
           <div>
             <a
