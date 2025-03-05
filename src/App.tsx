@@ -34,7 +34,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
 
           <Route
-            path="/programs/2025-anambra-state-teachers-competition-registration-form"
+            path="/programs/2025-southeast-teachers-competition-registration-form"
             element={<TeachersForm />}
           />
         </Routes>

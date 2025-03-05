@@ -85,7 +85,7 @@ const programsData: Program[] = [
     ],
   },
   {
-    title: "Anambra State Teachers Competition",
+    title: "SouthEast Teachers Competition",
     subcategories: [
       {
         title: "Competition Details",
@@ -149,7 +149,7 @@ const Programs = () => {
                         return (
                           <div key={itemIndex} className="mb-3">
                             {isTeachers ? (
-                              <Link to="/programs/2025-anambra-state-teachers-competition-registration-form">
+                              <Link to="/programs/2025-southeast-teachers-competition-registration-form">
                                 <h4
                                   className="text-sm font-medium text-blue-600 underline cursor-pointer"
                                   data-aos="fade-up"

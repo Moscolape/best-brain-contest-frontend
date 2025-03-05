@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import PageWrapper from "./pageWrapper";
 import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
+import { statesData } from "../utils/statesdata";
 
 interface FormData {
   name: string;
@@ -10,8 +11,13 @@ interface FormData {
   dob: string;
   phoneNumber: string;
   email: string;
+  stateOrigin: string;
+  lgaOrigin: string;
+  stateResidence: string;
+  lgaResidence: string;
   schoolName: string;
   schoolAddress: string;
+  state: string;
   lga: string;
   contactPhone: string;
   contactEmail: string;
@@ -33,6 +39,7 @@ const TeachersRegistrationForm: React.FC = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     setValue,
     formState: { errors },
   } = useForm<FormData>();
@@ -41,6 +48,11 @@ const TeachersRegistrationForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  // Watch selected states
+  const stateOrigin = watch("stateOrigin");
+  const stateResidence = watch("stateResidence");
+  const stateSchool = watch("state");
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -98,7 +110,7 @@ const TeachersRegistrationForm: React.FC = () => {
           className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
           data-aos="fade-left"
         >
-          2025 ANAMBRA STATE TEACHERS COMPETITION
+          2025 SOUTHEAST TEACHERS COMPETITION
         </h2>
         <h2
           className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
@@ -116,8 +128,12 @@ const TeachersRegistrationForm: React.FC = () => {
           data-aos="fade-left"
           data-aos-delay={500}
         >
-          <b>N.B:</b> This competition is open for only secondary school
-          teachers in private, public, and mission schools in Anambra State.
+          <b>
+            <u>N.B:</u>
+          </b>{" "}
+          This competition is open for only <b>secondary school teachers</b> in
+          private, public, and mission schools in{" "}
+          <b>Abia, Anambra, Enugu, Ebonyi and Imo</b> State.
         </p>
         <br />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -177,6 +193,74 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.email.message}</p>
           )}
 
+          <label>State of Origin</label>
+          <select
+            {...register("stateOrigin", { required: true })}
+            className="w-full p-3 border rounded-lg"
+          >
+            <option value="">Select State</option>
+            {Object.keys(statesData).map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+          {errors.stateOrigin && (
+            <p className="text-red-500">{errors.stateOrigin.message}</p>
+          )}
+
+          <label>LGA of Origin</label>
+          <select
+            {...register("lgaOrigin", { required: true })}
+            className="w-full p-3 border rounded-lg"
+          >
+            <option value="">Select LGA</option>
+            {stateOrigin &&
+              statesData[stateOrigin as keyof typeof statesData]?.map((lga) => (
+                <option key={lga} value={lga}>
+                  {lga}
+                </option>
+              ))}
+          </select>
+          {errors.lgaOrigin && (
+            <p className="text-red-500">{errors.lgaOrigin.message}</p>
+          )}
+
+          <label>State of Residence</label>
+          <select
+            {...register("stateResidence", { required: true })}
+            className="w-full p-3 border rounded-lg"
+          >
+            <option value="">Select State</option>
+            {Object.keys(statesData).map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+          {errors.stateResidence && (
+            <p className="text-red-500">{errors.stateResidence.message}</p>
+          )}
+
+          <label>LGA of Residence</label>
+          <select
+            {...register("lgaResidence", { required: true })}
+            className="w-full p-3 border rounded-lg"
+          >
+            <option value="">Select LGA</option>
+            {stateResidence &&
+              statesData[stateResidence as keyof typeof statesData]?.map(
+                (lga) => (
+                  <option key={lga} value={lga}>
+                    {lga}
+                  </option>
+                )
+              )}
+          </select>
+          {errors.lgaResidence && (
+            <p className="text-red-500">{errors.lgaResidence.message}</p>
+          )}
+
           <h2 className="text-xl font-bold mt-6 mb-4">School Information</h2>
 
           <label htmlFor="">Name of School</label>
@@ -201,41 +285,34 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.schoolAddress.message}</p>
           )}
 
-          <label htmlFor="lga">L.G.A School Resides In</label>
+          <label>State School Resides In</label>
           <select
-            {...register("lga", {
-              required: "Local Government Area is required",
-            })}
+            {...register("state", { required: true })}
+            className="w-full p-3 border rounded-lg"
+          >
+            <option value="">Select State</option>
+            {Object.keys(statesData).map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+          {errors.state && (
+            <p className="text-red-500">{errors.state.message}</p>
+          )}
+
+          <label>LGA School Resides In</label>
+          <select
+            {...register("lga", { required: true })}
             className="w-full p-3 border rounded-lg"
           >
             <option value="">Select LGA</option>
-            {[
-              "Aguata",
-              "Anambra East",
-              "Anambra West",
-              "Anaocha",
-              "Awka North",
-              "Awka South",
-              "Ayamelum",
-              "Dunukofia",
-              "Ekwusigo",
-              "Idemili North",
-              "Idemili South",
-              "Ihiala",
-              "Njikoka",
-              "Nnewi North",
-              "Nnewi South",
-              "Ogbaru",
-              "Onitsha North",
-              "Onitsha South",
-              "Orumba North",
-              "Orumba South",
-              "Oyi",
-            ].map((lga) => (
-              <option key={lga} value={lga}>
-                {lga}
-              </option>
-            ))}
+            {stateSchool &&
+              statesData[stateSchool as keyof typeof statesData]?.map((lga) => (
+                <option key={lga} value={lga}>
+                  {lga}
+                </option>
+              ))}
           </select>
           {errors.lga && <p className="text-red-500">{errors.lga.message}</p>}
 
@@ -399,9 +476,13 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <h2 className="text-xl font-bold mt-6 mb-4">Feedback</h2>
           <p>
-            For feedback and more information about the competition, chat
-            us on WhatsApp via{" "}
-            <Link to={"https://wa.me/+2347077145544"} target="_blank" className="text-blue-800 font-medium">
+            For feedback and more information about the competition, chat us on
+            WhatsApp via{" "}
+            <Link
+              to={"https://wa.me/+2347077145544"}
+              target="_blank"
+              className="text-blue-800 font-medium"
+            >
               0707 714 5544
             </Link>{" "}
             and click to follow us on all the Facebook Pages below;
