@@ -4,6 +4,7 @@ import PageWrapper from "./pageWrapper";
 import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { statesData } from "../utils/statesdata";
+import { dipfHeader } from "../constants/assets";
 
 interface FormData {
   name: string;
@@ -105,7 +106,8 @@ const TeachersRegistrationForm: React.FC = () => {
 
   return (
     <PageWrapper>
-      <div className="p-6 bg-gray-100 rounded-md shadow-lg max-w-3xl mx-auto sm:mt-30 -mt-5">
+      <img src={dipfHeader} alt="dipf" className="sm:w-1/2 w-full sm:h-30 h-20 mx-auto sm:mt-30 sm:mb-10 mb-5 block" />
+      <div className="p-6 bg-gray-100 rounded-md shadow-lg max-w-3xl mx-auto">
         <h2
           className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
           data-aos="fade-left"
@@ -519,6 +521,7 @@ const TeachersRegistrationForm: React.FC = () => {
           </button>
         </form>
       </div>
+      {/* <img src={dipfHeader} alt="dipf" className="sm:w-1/2 w-full sm:h-30 h-20 mx-auto sm:mt-30 sm:mb-10 mb-5 block" /> */}
     </PageWrapper>
   );
 };

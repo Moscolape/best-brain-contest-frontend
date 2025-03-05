@@ -38,6 +38,8 @@ import winner4 from "../assets/winner4.jpeg";
 import winner5 from "../assets/winner5.jpeg";
 import winner6 from "../assets/winner6.jpeg";
 import notAvailableYet from "../assets/undraw_no-data_ig65.svg";
+import dipfHeader from "../assets/NEW DIPF.png";
+import bbcFooter from "../assets/BBC FOOTER.png";
 
 
 export {
@@ -80,5 +82,7 @@ export {
   winner4,
   winner5,
   winner6,
-  notAvailableYet
+  notAvailableYet,
+  dipfHeader,
+  bbcFooter
 };
