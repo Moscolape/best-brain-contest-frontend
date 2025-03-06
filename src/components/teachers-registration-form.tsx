@@ -106,7 +106,11 @@ const TeachersRegistrationForm: React.FC = () => {
 
   return (
     <PageWrapper>
-      <img src={dipfHeader} alt="dipf" className="sm:w-1/2 w-full sm:h-30 h-20 mx-auto sm:mt-30 sm:mb-10 mb-5 block" />
+      <img
+        src={dipfHeader}
+        alt="dipf"
+        className="sm:w-1/2 w-full sm:h-30 h-20 mx-auto sm:mt-30 sm:mb-10 mb-5 block"
+      />
       <div className="p-6 bg-gray-100 rounded-md shadow-lg max-w-3xl mx-auto">
         <h2
           className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
@@ -493,23 +497,16 @@ const TeachersRegistrationForm: React.FC = () => {
             <a
               href={"https://www.facebook.com/share/18LvqCJULT/"}
               target="_blank"
-              className="text-blue-800 font-bold"
+              className="text-blue-800 font-bold block"
             >
               @Best Brain Contest
             </a>
             <a
-              href={"https://www.facebook.com/franklyn.akpoazaa/"}
+              href={"https://www.facebook.com/share/1H1uYUHta9/"}
               target="_blank"
-              className="inline-block mx-3 text-blue-800 font-bold"
+              className="inline-block text-blue-800 font-bold"
             >
-              @Frank Igbojindu
-            </a>
-            <a
-              href={"https://www.facebook.com/share/19Cu6XfYJ3/"}
-              target="_blank"
-              className="text-blue-800 font-bold"
-            >
-              @Akpoazaa Foundation
+              @De Imperial Philanthropic Family
             </a>
           </div>
 
