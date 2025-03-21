@@ -78,6 +78,7 @@ const Login = () => {
             {...register("password", {
               required: "Password is required",
             })}
+            type="password"
             className="w-full p-3 border rounded-lg"
           />
           {errors.password && (
