@@ -10,8 +10,19 @@ const Programs = lazy(() => import("./pages/programs"));
 const Blog = lazy(() => import("./pages/blog"));
 const Contact = lazy(() => import("./pages/contact"));
 const Gallery = lazy(() => import("./pages/gallery"));
+
+// const SignUp = lazy(() => import("./pages/signup"));
+const Login = lazy(() => import("./pages/login"));
+
 const TeachersForm = lazy(
   () => import("./components/teachers-registration-form")
+);
+const ScholarshipForm = lazy(
+  () => import("./components/dipf-scholarship-form")
+);
+
+const ScholarshipBeneficiaries2023 = lazy(
+  () => import("./components/2023-scholarship-beneficiaries")
 );
 
 function App() {
@@ -33,9 +44,19 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/gallery" element={<Gallery />} />
 
+          {/* <Route path="/signup" element={<SignUp />} /> */}
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/scholarship-form" element={<ScholarshipForm />} />
+
           <Route
             path="/programs/2025-southeast-teachers-competition-registration-form"
             element={<TeachersForm />}
+          />
+
+          <Route
+            path="/programs/2023-scholarship-beneficiaries"
+            element={<ScholarshipBeneficiaries2023 show={false} />}
           />
         </Routes>
       </Router>

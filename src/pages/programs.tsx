@@ -145,7 +145,11 @@ const Programs = () => {
                         const isTeachers = item.title
                           .toLowerCase()
                           .includes("teachers");
-
+                        const is2023Beneficiaries = item.details.map((det) =>
+                          det
+                            .toLowerCase()
+                            .includes("2023 scholarship beneficiaries")
+                        );
                         return (
                           <div key={itemIndex} className="mb-3">
                             {isTeachers ? (
@@ -159,20 +163,31 @@ const Programs = () => {
                               </Link>
                             ) : (
                               <h4
-                                className="text-sm font-medium"
+                                className="text-sm font-bold"
                                 data-aos="fade-up"
                               >
                                 {item.title}
                               </h4>
                             )}
-                            <ul className="list-disc pl-5">
+                            <ul className="pl-5">
                               {item.details.map((detail, detailIndex) => (
                                 <li
                                   key={detailIndex}
                                   className="text-sm"
                                   data-aos="fade-up"
                                 >
-                                  {detail}
+                                  {is2023Beneficiaries &&
+                                  detail ===
+                                    "2023 Scholarship Beneficiaries" ? (
+                                    <Link
+                                      to="/programs/2023-scholarship-beneficiaries"
+                                      className="text-blue-600 underline"
+                                    >
+                                      {detail}
+                                    </Link>
+                                  ) : (
+                                    detail
+                                  )}
                                 </li>
                               ))}
                             </ul>
