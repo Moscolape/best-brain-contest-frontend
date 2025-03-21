@@ -446,7 +446,9 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                     <th className="border p-2">SS2</th>
                     <th className="border p-2">SS3</th>
                     <th className="border p-2">Senior WAEC</th>
-                    {authToken && <th className="border p-2">Actions</th>}
+                    {authToken && show && (
+                      <th className="border p-2">Actions</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -544,8 +546,8 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                         >
                           {beneficiary.seniorWAEC}
                         </td>
-                        <td className="border p-2">
-                          {authToken && (
+                        {authToken && show && (
+                          <td className="border p-2">
                             <>
                               <button
                                 onClick={() => handleEditClick(beneficiary)}
@@ -565,8 +567,8 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                                 View History
                               </button> */}
                             </>
-                          )}
-                        </td>
+                          </td>
+                        )}
                       </tr>
                     ))
                   ) : (
