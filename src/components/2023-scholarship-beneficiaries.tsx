@@ -94,10 +94,29 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
     setIsSearching(true);
 
     try {
-      const encodedCode = encodeURIComponent(searchCode); // Encode special characters
+      // Split the code into parts (assuming the format is DIPF/STATE/YEAR/NUMBER)
+      const parts = searchCode.split("/");
+
+      if (parts.length !== 4) {
+        throw new Error("Invalid beneficiary code format.");
+      }
+
+      // Convert the state (2nd part) to title case (e.g., ABIA -> Abia)
+      parts[1] = parts[1]
+        .toLowerCase()
+        .replace(/\b\w/g, (char) => char.toUpperCase());
+
+      // Reconstruct the formatted code
+      const formattedCode = parts.join("/");
+      console.log("Formatted Code:", formattedCode); // Debugging log
+
+      // Encode special characters before sending
+      const encodedCode = encodeURIComponent(formattedCode);
+
       const response = await fetch(
         `${API_BASE_URL}/beneficiary/${encodedCode}`
       );
+
       if (!response.ok) throw new Error("Beneficiary not found");
 
       const data = await response.json();
@@ -373,7 +392,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
               type="text"
               value={searchCode}
               onChange={(e) => setSearchCode(e.target.value)}
-              placeholder="Enter Code e.g DIPF/Abia/2023/021"
+              placeholder="Enter Code e.g DIPF/ANAMBRA/2023/021"
               className="p-2 border rounded-lg sm:w-[26rem] w-full"
             />
             <div className="sm:my-0 my-5 flex justify-center">
@@ -427,7 +446,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="w-[300%] border-collapse border border-gray-300">
+              <table className="sm:w-[300%] w-[500%] border-collapse border border-gray-300">
                 <thead>
                   <tr className="bg-gray-300 text-left">
                     <th className="border p-2">Beneficiary Name</th>
