@@ -85,6 +85,19 @@ const programsData: Program[] = [
     ],
   },
   {
+    title: "Anambra State Teachers Competition",
+    subcategories: [
+      {
+        title: "Competition Details",
+        items: [
+          { title: "2025 ASTC Registration Form", details: [] },
+          { title: "About The Competition", details: [] },
+          { title: "Photos of the Champions", details: [] },
+        ],
+      },
+    ],
+  },
+  {
     title: "SouthEast Teachers Competition",
     subcategories: [
       {

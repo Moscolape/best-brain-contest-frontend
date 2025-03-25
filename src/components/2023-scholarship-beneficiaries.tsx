@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import PageWrapper from "../components/pageWrapper";
 import { dipfHeader } from "../constants/assets";
+import moment from "moment";
+import { useAuth } from "../hooks/use-auth";
 
 interface Beneficiary {
   beneficiaryName: string;
@@ -21,6 +23,42 @@ interface Beneficiary {
   ss3: string;
   seniorWAEC: string;
   beneficiaryCode: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface PreviousData {
+  _id: string;
+  beneficiaryName: string;
+  codeNo: string;
+  school: string;
+  state: string;
+  year: string;
+  parentPhone: string;
+  accountName: string;
+  accountNo: string;
+  bank: string;
+  js1: string;
+  js2: string;
+  js3: string;
+  juniorWAEC: string;
+  ss1: string;
+  ss2: string;
+  ss3: string;
+  seniorWAEC: string;
+  beneficiaryCode: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
+}
+
+interface UpdateHistory {
+  _id: string;
+  beneficiaryCode: string;
+  previousData: PreviousData;
+  updatedBy: string;
+  updatedAt: string; // ISO date string
+  __v: number;
 }
 
 interface TableProps {
@@ -33,11 +71,14 @@ const API_BASE_URL = "https://best-brain-contest-backend.onrender.com/api";
 const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [updating, isUpdating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [editingBeneficiary, setEditingBeneficiary] =
     useState<Beneficiary | null>(null);
   const [updatedData, setUpdatedData] = useState<Partial<Beneficiary>>({});
+  const [updateHistory, setUpdateHistory] = useState<UpdateHistory[]>([]);
+  const [updatedCode, setUpdateCode] = useState<string>("");
 
   // Filters & Sorting
   const [selectedState, setSelectedState] = useState<string>("");
@@ -48,14 +89,9 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
   const [searchCode, setSearchCode] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
-  //   const [history, setHistory] = useState<any[]>([]); // Stores fetched history
-  //   const [historyModalOpen, setHistoryModalOpen] = useState<boolean>(false); // Modal state
-  //   const [selectedBeneficiaryCode, setSelectedBeneficiaryCode] = useState<
-  //     string | null
-  //   >(null);
-
   // Check if user is authenticated
   const authToken = localStorage.getItem("authToken");
+  const {roleAccess} = useAuth();
 
   // Memoized function to prevent unnecessary re-creation
   const fetchBeneficiaries = useCallback(async () => {
@@ -108,7 +144,6 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
 
       // Reconstruct the formatted code
       const formattedCode = parts.join("/");
-      console.log("Formatted Code:", formattedCode); // Debugging log
 
       // Encode special characters before sending
       const encodedCode = encodeURIComponent(formattedCode);
@@ -162,6 +197,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
   // Submit Update Request
   const handleUpdate = async () => {
     if (!editingBeneficiary) return;
+    isUpdating(true);
 
     try {
       const encodedCode = encodeURIComponent(
@@ -187,32 +223,56 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
       setEditingBeneficiary(null);
     } catch (err) {
       console.log(err);
+      isUpdating(false);
       alert("Error updating beneficiary.");
     }
   };
 
-  //   const fetchUpdateHistory = async (beneficiaryCode: string) => {
-  //     setLoading(true);
-  //     setError(null);
-  //     try {
-  //       const encodedCode = encodeURIComponent(beneficiaryCode); // Encode special characters
-  //       const response = await fetch(
-  //         `${API_BASE_URL}/beneficiary/history/${encodedCode}`
-  //       );
+  const fetchUpdateHistory = async (beneficiaryCode: string) => {
+    const parts = beneficiaryCode.split("/");
 
-  //       if (!response.ok) throw new Error("No update history found");
+    setUpdateCode(beneficiaryCode);
 
-  //       const data = await response.json();
-  //       setHistory(data.history); // Store history in state
-  //       setSelectedBeneficiaryCode(beneficiaryCode);
-  //       setHistoryModalOpen(true); // Open history modal
-  //     } catch (err) {
-  //       console.log(err);
-  //       setError("No update history found.");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+    if (parts.length !== 4) {
+      throw new Error("Invalid beneficiary code format.");
+    }
+
+    // Convert the state (2nd part) to title case (e.g., ABIA -> Abia)
+    parts[1] = parts[1]
+      .toLowerCase()
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+
+    // Reconstruct the formatted code
+    const formattedCode = parts.join("/");
+
+    try {
+      const encodedCode = encodeURIComponent(formattedCode);
+      const response = await fetch(
+        `${API_BASE_URL}/beneficiary/history/${encodedCode}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message);
+        setUpdateHistory([]);
+        throw new Error(data.message || "Failed to fetch update history");
+      }
+
+      setUpdateHistory(data.history);
+      console.log(updateHistory);
+    } catch (error) {
+      console.error("Error fetching update history:", error);
+      return null; // Return null in case of failure
+    }
+  };
 
   const Content = (
     <>
@@ -334,7 +394,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                   onClick={handleUpdate}
                   className="px-4 py-2 bg-green-500 text-white rounded-lg"
                 >
-                  Save
+                  {updating ? "Saving..." : "Save"}
                 </button>
                 <button
                   onClick={() => setEditingBeneficiary(null)}
@@ -346,43 +406,6 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
             </div>
           </div>
         )}
-
-        {/* {historyModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white sm:w-[50%] w-4/5 rounded-lg p-6 animate-fadeDownFast">
-              <h3 className="text-xl font-bold mb-4">Update History ({selectedBeneficiaryCode})</h3>
-
-              {history.length > 0 ? (
-                <ul className="max-h-[300px] overflow-y-auto">
-                  {history.map((record, index) => (
-                    <li key={index} className="mb-4 border-b pb-2">
-                      <p className="text-sm text-gray-500">
-                        <strong>Updated At:</strong>{" "}
-                        {new Date(record.updatedAt).toLocaleString()}
-                      </p>
-                      <pre className="bg-gray-100 p-2 rounded text-sm">
-                        {JSON.stringify(record.previousData, null, 2)}
-                      </pre>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-center text-gray-500">
-                  No history available.
-                </p>
-              )}
-
-              <div className="mt-4 flex justify-end">
-                <button
-                  onClick={() => setHistoryModalOpen(false)}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )} */}
 
         {/* Filters Section */}
         <div className="sm:flex flex-wrap gap-4 justify-between items-center mb-6 w-full">
@@ -465,7 +488,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                     <th className="border p-2">SS2</th>
                     <th className="border p-2">SS3</th>
                     <th className="border p-2">Senior WAEC</th>
-                    {authToken && show && (
+                    {authToken && show && roleAccess === "admin" && (
                       <th className="border p-2">Actions</th>
                     )}
                   </tr>
@@ -476,7 +499,11 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                       <tr
                         key={index}
                         className={`text-sm border ${
-                          index % 2 == 0 ? "bg-gray-100" : "bg-gray-200"
+                          beneficiary.createdAt !== beneficiary.updatedAt
+                            ? "bg-red-100"
+                            : index % 2 === 0
+                            ? "bg-gray-100"
+                            : "bg-gray-200"
                         }`}
                       >
                         <td className="border p-2">
@@ -565,7 +592,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                         >
                           {beneficiary.seniorWAEC}
                         </td>
-                        {authToken && show && (
+                        {authToken && show && roleAccess === "admin" && (
                           <td className="border p-2">
                             <>
                               <button
@@ -574,17 +601,19 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                               >
                                 Edit
                               </button>
-                              {/* 
-                              <button
-                                onClick={() =>
-                                  fetchUpdateHistory(
-                                    beneficiary.beneficiaryCode
-                                  )
-                                }
-                                className="px-2 py-1 bg-gray-600 text-white rounded"
-                              >
-                                View History
-                              </button> */}
+                              {beneficiary.createdAt !==
+                                beneficiary.updatedAt && (
+                                <button
+                                  onClick={() =>
+                                    fetchUpdateHistory(
+                                      beneficiary.beneficiaryCode
+                                    )
+                                  }
+                                  className="px-2 py-1 bg-gray-600 text-white rounded"
+                                >
+                                  View History
+                                </button>
+                              )}
                             </>
                           </td>
                         )}
@@ -630,6 +659,67 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
           </>
         )}
       </div>
+      {(updateHistory && updateHistory.length > 0) && (
+        <div className="p-6 sm:bg-gray-100 rounded-md sm:shadow-lg max-w-5xl mx-auto font-Montserrat mt-10">
+          <h1>
+            <b>Update History for {updatedCode}</b>
+          </h1>
+          <br />
+          <div className="overflow-x-auto">
+            <table className="sm:w-[200%] w-[400%] border-collapse border border-gray-300">
+              <thead>
+                <tr className="bg-gray-300 text-left">
+                  <th className="border p-2">Beneficiary Name</th>
+                  <th className="border p-2">School</th>
+                  <th className="border p-2">State</th>
+                  <th className="border p-2">Parent Phone</th>
+                  <th className="border p-2">Account Name</th>
+                  <th className="border p-2">Account No</th>
+                  <th className="border p-2">Bank</th>
+                  <th className="border p-2">Updated On:</th>
+                </tr>
+              </thead>
+              <tbody>
+                {updateHistory.map((beneficiary, index) => (
+                  <tr
+                    key={index}
+                    className={`text-sm border ${
+                      index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
+                    }`}
+                  >
+                    <td className="border p-2">
+                      {beneficiary.previousData.beneficiaryName}
+                    </td>
+                    <td className="border p-2">
+                      {beneficiary.previousData.school}
+                    </td>
+                    <td className="border p-2">
+                      {beneficiary.previousData.state}
+                    </td>
+                    <td className="border p-2">
+                      {beneficiary.previousData.parentPhone}
+                    </td>
+                    <td className="border p-2">
+                      {beneficiary.previousData.accountName}
+                    </td>
+                    <td className="border p-2">
+                      {beneficiary.previousData.accountNo}
+                    </td>
+                    <td className="border p-2">
+                      {beneficiary.previousData.bank}
+                    </td>
+                    <td className="border p-2">
+                      {moment(beneficiary.previousData.updatedAt).format(
+                        "MMMM Do YYYY, h:mm:ss a"
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </>
   );
 

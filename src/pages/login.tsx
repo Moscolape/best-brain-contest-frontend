@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../components/pageWrapper";
+import { useAuth } from "../hooks/use-auth";
 
 interface LoginData {
   email: string;
@@ -10,6 +11,7 @@ interface LoginData {
 
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -23,7 +25,7 @@ const Login = () => {
     try {
       setIsSubmitting(true);
 
-      const response = await fetch("https://best-brain-contest-backend.onrender.com/api/auth/login", {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -34,9 +36,9 @@ const Login = () => {
       const datae = await response.json();
       console.log("Login Response:", datae);
 
-      // Store token in localStorage
-      if(datae.message.includes('successful')) {
-        localStorage.setItem("authToken", datae.token);
+      // Store token and roleAccess using context
+      if (datae.message.includes("successful")) {
+        login(datae.token, datae.roleAccess);
       }
 
       alert("Login successful!");

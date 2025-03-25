@@ -11,7 +11,7 @@ const Blog = lazy(() => import("./pages/blog"));
 const Contact = lazy(() => import("./pages/contact"));
 const Gallery = lazy(() => import("./pages/gallery"));
 
-// const SignUp = lazy(() => import("./pages/signup"));
+const SignUp = lazy(() => import("./pages/signup"));
 const Login = lazy(() => import("./pages/login"));
 
 const TeachersForm = lazy(
@@ -44,7 +44,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/gallery" element={<Gallery />} />
 
-          {/* <Route path="/signup" element={<SignUp />} /> */}
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
 
           <Route path="/scholarship-form" element={<ScholarshipForm />} />
