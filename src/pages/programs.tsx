@@ -163,6 +163,11 @@ const Programs = () => {
                             .toLowerCase()
                             .includes("2023 scholarship beneficiaries")
                         );
+                        const is2024Beneficiaries = item.details.map((det) =>
+                          det
+                            .toLowerCase()
+                            .includes("2024 scholarship beneficiaries")
+                        );
                         return (
                           <div key={itemIndex} className="mb-3">
                             {isTeachers ? (
@@ -194,6 +199,15 @@ const Programs = () => {
                                     "2023 Scholarship Beneficiaries" ? (
                                     <Link
                                       to="/programs/2023-scholarship-beneficiaries"
+                                      className="text-blue-600 underline"
+                                    >
+                                      {detail}
+                                    </Link>
+                                  ) : is2024Beneficiaries &&
+                                    detail ===
+                                      "2024 Scholarship Beneficiaries" ? (
+                                    <Link
+                                      to="/programs/2024-scholarship-beneficiaries"
                                       className="text-blue-600 underline"
                                     >
                                       {detail}

@@ -24,6 +24,10 @@ const ScholarshipForm = lazy(
 const ScholarshipBeneficiaries2023 = lazy(
   () => import("./components/2023-scholarship-beneficiaries")
 );
+const ScholarshipBeneficiaries2024 = lazy(
+  () => import("./components/2024-scholarship-beneficiaries")
+);
+
 
 function App() {
   return (
@@ -57,6 +61,10 @@ function App() {
           <Route
             path="/programs/2023-scholarship-beneficiaries"
             element={<ScholarshipBeneficiaries2023 show={false} />}
+          />
+          <Route
+            path="/programs/2024-scholarship-beneficiaries"
+            element={<ScholarshipBeneficiaries2024 show={false} />}
           />
         </Routes>
       </Router>

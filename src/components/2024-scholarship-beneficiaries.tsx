@@ -66,11 +66,11 @@ interface TableProps {
 }
 
 // API Base URL
-// const API_BASE_URL = "http://localhost:5000/api";
 const API_BASE_URL = "https://best-brain-contest-backend.onrender.com/api";
+// const API_BASE_URL = "http://localhost:5000/api";
 
 
-const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
+const BeneficiariesTable2024: React.FC<TableProps> = ({ show }) => {
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [updating, isUpdating] = useState<boolean>(false);
@@ -97,7 +97,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
 
   // Memoized function to prevent unnecessary re-creation
   const fetchBeneficiaries = useCallback(async () => {
-    if (isSearching) return;
+    if (isSearching) return; // Prevent fetching when searching
     setLoading(true);
     setError(null);
     try {
@@ -106,7 +106,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
         perPage: "10",
         state: selectedState || "Abia",
         sortBy: sortBy || "",
-        year: "2023"
+        year: "2024"
       });
 
       const response = await fetch(
@@ -291,7 +291,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
           className="sm:text-3xl text-xl font-bold mb-4 text-center"
           data-aos="fade-left"
         >
-          2023 Scholarship Beneficiaries
+          2024 Scholarship Beneficiaries
         </h2>
 
         {editingBeneficiary && (
@@ -395,7 +395,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
               <div className="flex justify-between mt-6">
                 <button
                   onClick={handleUpdate}
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg cursor-pointer hover:bg-green-800"
                 >
                   {updating ? "Saving..." : "Save"}
                 </button>
@@ -418,13 +418,13 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
               type="text"
               value={searchCode}
               onChange={(e) => setSearchCode(e.target.value)}
-              placeholder="Enter Code e.g DIPF/ANAMBRA/2023/021"
+              placeholder="Enter Code e.g DIPF/ANAMBRA/2024/021"
               className="p-2 border rounded-lg sm:w-[26rem] w-full"
             />
             <div className="sm:my-0 my-5 flex justify-center">
               <button
                 onClick={fetchBeneficiaryByCode}
-                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 mr-3"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-800 mr-3"
               >
                 Search
               </button>
@@ -729,4 +729,4 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
   return show ? Content : <PageWrapper>{Content}</PageWrapper>;
 };
 
-export default BeneficiariesTable2023;
+export default BeneficiariesTable2024;
