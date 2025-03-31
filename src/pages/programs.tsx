@@ -158,6 +158,9 @@ const Programs = () => {
                         const isTeachers = item.title
                           .toLowerCase()
                           .includes("teachers");
+                        const isAnambraTeachers = item.title
+                          .toLowerCase()
+                          .includes("astc");
                         const is2023Beneficiaries = item.details.map((det) =>
                           det
                             .toLowerCase()
@@ -172,6 +175,15 @@ const Programs = () => {
                           <div key={itemIndex} className="mb-3">
                             {isTeachers ? (
                               <Link to="/programs/2025-southeast-teachers-competition-registration-form">
+                                <h4
+                                  className="text-sm font-medium text-blue-600 underline cursor-pointer"
+                                  data-aos="fade-up"
+                                >
+                                  {item.title}
+                                </h4>
+                              </Link>
+                            ) : isAnambraTeachers ? (
+                              <Link to="/programs/2025-anambra-state-teachers-competition-registration-form">
                                 <h4
                                   className="text-sm font-medium text-blue-600 underline cursor-pointer"
                                   data-aos="fade-up"

@@ -14,7 +14,10 @@ const Gallery = lazy(() => import("./pages/gallery"));
 const SignUp = lazy(() => import("./pages/signup"));
 const Login = lazy(() => import("./pages/login"));
 
-const TeachersForm = lazy(
+const AnambraTeachersForm = lazy(
+  () => import("./components/anambra-state-teachers-competition-form")
+);
+const SoutheastTeachersForm = lazy(
   () => import("./components/teachers-registration-form")
 );
 const ScholarshipForm = lazy(
@@ -27,7 +30,6 @@ const ScholarshipBeneficiaries2023 = lazy(
 const ScholarshipBeneficiaries2024 = lazy(
   () => import("./components/2024-scholarship-beneficiaries")
 );
-
 
 function App() {
   return (
@@ -55,7 +57,11 @@ function App() {
 
           <Route
             path="/programs/2025-southeast-teachers-competition-registration-form"
-            element={<TeachersForm />}
+            element={<SoutheastTeachersForm />}
+          />
+          <Route
+            path="/programs/2025-anambra-state-teachers-competition-registration-form"
+            element={<AnambraTeachersForm />}
           />
 
           <Route

@@ -3,11 +3,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import PageWrapper from "./pageWrapper";
 import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
-import { statesData } from "../utils/statesdata";
-import { dipfHeader } from "../constants/assets";
 
 interface FormData {
-  name: string;
+  fullName: string;
   gender: "Male" | "Female";
   dob: string;
   phoneNumber: string;
@@ -19,7 +17,7 @@ interface FormData {
   schoolName: string;
   schoolAddress: string;
   state: string;
-  lga: string;
+  lgaOfSchool: string;
   contactPhone: string;
   contactEmail: string;
   subjectTaught: string;
@@ -40,7 +38,7 @@ const TeachersRegistrationForm: React.FC = () => {
     register,
     handleSubmit,
     reset,
-    watch,
+    // watch,
     setValue,
     formState: { errors },
   } = useForm<FormData>();
@@ -51,9 +49,9 @@ const TeachersRegistrationForm: React.FC = () => {
   const navigate = useNavigate();
 
   // Watch selected states
-  const stateOrigin = watch("stateOrigin");
-  const stateResidence = watch("stateResidence");
-  const stateSchool = watch("state");
+  //   const stateOrigin = watch("stateOrigin");
+  //   const stateResidence = watch("stateResidence");
+  //   const stateSchool = watch("state");
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -78,7 +76,7 @@ const TeachersRegistrationForm: React.FC = () => {
       console.log("FormData Entries:", [...formData.entries()]);
 
       const response = await fetch(
-        "https://best-brain-contest-backend.onrender.com/api/register",
+        "https://best-brain-contest-backend.onrender.com/api/register/anambra",
         {
           method: "POST",
           body: formData,
@@ -106,17 +104,12 @@ const TeachersRegistrationForm: React.FC = () => {
 
   return (
     <PageWrapper>
-      <img
-        src={dipfHeader}
-        alt="dipf"
-        className="sm:w-1/2 w-full sm:h-30 h-20 mx-auto sm:mt-30 sm:mb-10 mb-5 block"
-      />
-      <div className="p-6 bg-gray-100 rounded-md shadow-lg max-w-3xl mx-auto font-Montserrat">
+      <div className="p-6 sm:bg-gray-100 rounded-md shadow-lg max-w-3xl mx-auto sm:mt-30 font-Montserrat">
         <h2
           className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
           data-aos="fade-left"
         >
-          2025 SOUTHEAST TEACHERS COMPETITION
+          2025 ANAMBRA STATE TEACHERS COMPETITION
         </h2>
         <h2
           className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
@@ -138,23 +131,22 @@ const TeachersRegistrationForm: React.FC = () => {
             <u>N.B:</u>
           </b>{" "}
           This competition is open for only <b>secondary school teachers</b> in
-          private, public, and mission schools in{" "}
-          <b>Abia, Anambra, Enugu, Ebonyi and Imo</b> State.
+          private, public, and mission schools in <b>Anambra</b> State.
         </p>
         <br />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <h2 className="text-xl font-bold mt-6 mb-4">
             Participant's Information
           </h2>
-          <label htmlFor="">Full Name</label>
+          <label>Full Name</label>
           <input
-            {...register("name", { required: "Name is required" })}
+            {...register("fullName", { required: "Full Name is required" })}
             placeholder="Full Name"
-            className="w-full p-3 border rounded-lg placeholder:text-gray-400"
+            className="w-full p-3 border rounded-lg"
           />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+          {errors.fullName && <p className="text-red-500">{errors.fullName.message}</p>}
 
-          <label htmlFor="">Gender</label>
+          <label>Gender</label>
           <select
             {...register("gender", { required: "Gender is required" })}
             className="w-full p-3 border rounded-lg"
@@ -167,16 +159,16 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.gender.message}</p>
           )}
 
-          <label htmlFor="">Date of Birth</label>
+          <label>Date of Birth</label>
           <input
             type="text"
             {...register("dob", { required: "Date of Birth is required" })}
-            placeholder="DD-MM-YYYY e.g 30-01-1985"
+            placeholder="DD-MM-YYYY e.g. 30-01-1985"
             className="w-full p-3 border rounded-lg"
           />
           {errors.dob && <p className="text-red-500">{errors.dob.message}</p>}
 
-          <label htmlFor="">Phone Number (WhatsApp)</label>
+          <label>Phone Number (WhatsApp)</label>
           <input
             {...register("phoneNumber", {
               required: "Phone number is required",
@@ -188,7 +180,7 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.phoneNumber.message}</p>
           )}
 
-          <label htmlFor="">Email Address</label>
+          <label>Email Address</label>
           <input
             type="email"
             {...register("email", { required: "Email is required" })}
@@ -199,77 +191,9 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.email.message}</p>
           )}
 
-          <label>State of Origin</label>
-          <select
-            {...register("stateOrigin", { required: true })}
-            className="w-full p-3 border rounded-lg"
-          >
-            <option value="">Select State</option>
-            {Object.keys(statesData).map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-          {errors.stateOrigin && (
-            <p className="text-red-500">{errors.stateOrigin.message}</p>
-          )}
-
-          <label>LGA of Origin</label>
-          <select
-            {...register("lgaOrigin", { required: true })}
-            className="w-full p-3 border rounded-lg"
-          >
-            <option value="">Select LGA</option>
-            {stateOrigin &&
-              statesData[stateOrigin as keyof typeof statesData]?.map((lga) => (
-                <option key={lga} value={lga}>
-                  {lga}
-                </option>
-              ))}
-          </select>
-          {errors.lgaOrigin && (
-            <p className="text-red-500">{errors.lgaOrigin.message}</p>
-          )}
-
-          <label>State of Residence</label>
-          <select
-            {...register("stateResidence", { required: true })}
-            className="w-full p-3 border rounded-lg"
-          >
-            <option value="">Select State</option>
-            {Object.keys(statesData).map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-          {errors.stateResidence && (
-            <p className="text-red-500">{errors.stateResidence.message}</p>
-          )}
-
-          <label>LGA of Residence</label>
-          <select
-            {...register("lgaResidence", { required: true })}
-            className="w-full p-3 border rounded-lg"
-          >
-            <option value="">Select LGA</option>
-            {stateResidence &&
-              statesData[stateResidence as keyof typeof statesData]?.map(
-                (lga) => (
-                  <option key={lga} value={lga}>
-                    {lga}
-                  </option>
-                )
-              )}
-          </select>
-          {errors.lgaResidence && (
-            <p className="text-red-500">{errors.lgaResidence.message}</p>
-          )}
-
           <h2 className="text-xl font-bold mt-6 mb-4">School Information</h2>
 
-          <label htmlFor="">Name of School</label>
+          <label>Name of School</label>
           <input
             {...register("schoolName", { required: "School name is required" })}
             placeholder="School Name"
@@ -279,7 +203,7 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.schoolName.message}</p>
           )}
 
-          <label htmlFor="">Address of school</label>
+          <label>Address of School</label>
           <input
             {...register("schoolAddress", {
               required: "School address is required",
@@ -291,50 +215,40 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.schoolAddress.message}</p>
           )}
 
-          <label>State School Resides In</label>
-          <select
-            {...register("state", { required: true })}
-            className="w-full p-3 border rounded-lg"
-          >
-            <option value="">Select State</option>
-            {Object.keys(statesData).map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-          {errors.state && (
-            <p className="text-red-500">{errors.state.message}</p>
-          )}
+          <label>LGA of School</label>
 
-          <label>LGA School Resides In</label>
           <select
-            {...register("lga", { required: true })}
+            {...register("lgaOfSchool", {
+              required: "LGA of School is required",
+            })}
             className="w-full p-3 border rounded-lg"
           >
             <option value="">Select LGA</option>
-            {stateSchool &&
-              statesData[stateSchool as keyof typeof statesData]?.map((lga) => (
-                <option key={lga} value={lga}>
-                  {lga}
-                </option>
-              ))}
+            {[
+              "Aguata","Anambra East","Anambra West","Anaocha","Awka North","Awka South","Ayamelum",
+              "Dunukofia","Ekwusigo","Idemili North","Idemili South","Ihiala","Njikoka","Nnewi North",
+              "Nnewi South","Ogbaru","Onitsha North","Onitsha South","Orumba North","Orumba South","Oyi"
+            ].map((lga) => (
+              <option key={lga} value={lga}>
+                {lga}
+              </option>
+            ))}
           </select>
-          {errors.lga && <p className="text-red-500">{errors.lga.message}</p>}
+          {errors.lgaOfSchool && <p className="text-red-500">{errors.lgaOfSchool.message}</p>}
 
-          <label htmlFor="">Phone Number of Contact Person (WhatsApp)</label>
+          <label>Phone Number of Contact Person (WhatsApp)</label>
           <input
             {...register("contactPhone", {
               required: "Phone number is required",
             })}
-            placeholder="Phone number"
+            placeholder="Contact Phone"
             className="w-full p-3 border rounded-lg"
           />
           {errors.contactPhone && (
             <p className="text-red-500">{errors.contactPhone.message}</p>
           )}
 
-          <label htmlFor="">School's Official Email Address</label>
+          <label>School's Official Email Address</label>
           <input
             type="email"
             {...register("contactEmail", { required: "Email is required" })}
@@ -347,7 +261,7 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <h2 className="text-xl font-bold mt-6 mb-4">Teaching Details</h2>
 
-          <label htmlFor="">What Subject Do You Teach? (enter only one)</label>
+          <label>What Subject Do You Teach? (enter only one)</label>
           <input
             {...register("subjectTaught", { required: "Subject is required" })}
             placeholder="Subject Taught"
@@ -357,7 +271,7 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.subjectTaught.message}</p>
           )}
 
-          <label htmlFor="">How Many Years Have You Been A Teacher?</label>
+          <label>How Many Years Have You Been A Teacher?</label>
           <input
             type="number"
             {...register("yearsOfExperience", {
@@ -371,7 +285,7 @@ const TeachersRegistrationForm: React.FC = () => {
             <p className="text-red-500">{errors.yearsOfExperience.message}</p>
           )}
 
-          <label htmlFor="">What's Your Current Position?</label>
+          <label>What's Your Current Position?</label>
           <input
             {...register("currentPosition", {
               required: "Position is required",
@@ -385,7 +299,7 @@ const TeachersRegistrationForm: React.FC = () => {
 
           <h2 className="text-xl font-bold mt-6 mb-4">Competition Category</h2>
 
-          <label htmlFor="">What Category Do You Want To Compete In?</label>
+          <label>What Category Do You Want To Compete In?</label>
           <select
             {...register("competitionCategory", {
               required: "Select a category",
