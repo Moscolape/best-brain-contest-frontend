@@ -5,6 +5,7 @@ import PageWrapper from "../components/pageWrapper";
 import { statesData } from "../utils/statesdata";
 import { dipfHeader } from "../constants/assets";
 import BeneficiariesTable2023 from "./2023-scholarship-beneficiaries";
+import BeneficiariesTable2024 from "./2024-scholarship-beneficiaries";
 
 interface BeneficiaryData {
   beneficiaryName: string;
@@ -254,7 +255,10 @@ const BeneficiaryForm = () => {
           </form>
         </div>
       ) : (
-        <BeneficiariesTable2023 show={true}/>
+        <>
+          <BeneficiariesTable2023 show={true} />
+          <BeneficiariesTable2024 show={true} />
+        </>
       )}
     </PageWrapper>
   );

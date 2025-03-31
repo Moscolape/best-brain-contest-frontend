@@ -286,7 +286,7 @@ const BeneficiariesTable2024: React.FC<TableProps> = ({ show }) => {
           className="sm:w-1/2 w-full sm:h-30 h-20 mx-auto sm:mt-30 sm:mb-10 mb-5 block"
         />
       )}
-      <div className="p-6 sm:bg-gray-100 rounded-md sm:shadow-lg max-w-5xl mx-auto font-Montserrat">
+      <div className="p-6 sm:bg-gray-100 rounded-md sm:shadow-lg max-w-5xl mx-auto font-Montserrat MB-20">
         <h2
           className="sm:text-3xl text-xl font-bold mb-4 text-center"
           data-aos="fade-left"
