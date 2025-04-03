@@ -80,11 +80,11 @@ const WeeklyQuizRegForm: React.FC = () => {
   return (
     <PageWrapper>
       <div className="p-6 sm:bg-gray-100 rounded-md shadow-lg max-w-3xl mx-auto sm:mt-30 font-Montserrat">
-        <div className="flex justify-center items-center">
-          <img src={logo} alt="logo" className="w-40 h-30" />
+        <div className="sm:flex justify-center items-center">
+          <img src={logo} alt="logo" className="sm:w-40 w-20 h-15 sm:h-30 sm:mx-0 mx-auto" />
           <div>
             <h2
-              className="sm:text-3xl text-2xl font-bold mb-4 font-Prism text-center"
+              className="sm:text-3xl text-2xl font-bold sm:mb-4 font-Prism text-center"
               data-aos="fade-left"
             >
               BBC WEEKLY ONLINE QUIZ
@@ -333,7 +333,7 @@ const WeeklyQuizRegForm: React.FC = () => {
           <p>
             For more enquiries about the quiz, chat us on WhatsApp via{" "}
             <Link
-              to={"https://wa.me/+2347077145544"}
+              to={"https://wa.me/+2347030555581"}
               target="_blank"
               className="text-blue-800 font-medium"
             >
