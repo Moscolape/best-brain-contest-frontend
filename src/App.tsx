@@ -23,6 +23,9 @@ const SoutheastTeachersForm = lazy(
 const ScholarshipForm = lazy(
   () => import("./components/dipf-scholarship-form")
 );
+const WeeeklyQuizForm = lazy(
+  () => import("./components/bbc-weekly-quiz-regForm")
+);
 
 const ScholarshipBeneficiaries2023 = lazy(
   () => import("./components/2023-scholarship-beneficiaries")
@@ -30,6 +33,10 @@ const ScholarshipBeneficiaries2023 = lazy(
 const ScholarshipBeneficiaries2024 = lazy(
   () => import("./components/2024-scholarship-beneficiaries")
 );
+
+
+const TakeQuiz = lazy(() => import("./pages/take-quiz"));
+const QuizInProgress = lazy(() => import("./components/quiz-in-progress"));
 
 function App() {
   return (
@@ -49,11 +56,20 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/take-quiz" element={<TakeQuiz />} />
+
+
+          <Route path="/take-quiz/questions" element={<QuizInProgress />} />
+
 
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
 
           <Route path="/scholarship-form" element={<ScholarshipForm />} />
+          <Route
+            path="/programs/bbc-weekly-online-quiz-registration-form"
+            element={<WeeeklyQuizForm />}
+          />
 
           <Route
             path="/programs/2025-southeast-teachers-competition-registration-form"

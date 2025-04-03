@@ -110,7 +110,110 @@ const programsData: Program[] = [
       },
     ],
   },
+  {
+    title: "BBC Weekly Online Quiz",
+    subcategories: [
+      {
+        title: "Quiz Details",
+        items: [
+          { title: "Weekly Quiz Registration Form", details: [] },
+          { title: "About The Quiz", details: [] },
+          { title: "Photos of our Champions", details: [] },
+        ],
+      },
+    ],
+  }
 ];
+
+interface ProgramAccordionProps {
+  title: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}
+
+const ProgramAccordion: React.FC<ProgramAccordionProps> = ({
+  title,
+  isOpen,
+  onToggle,
+  children,
+}) => (
+  <div className="border-b border-gray-300 mb-4">
+    <button
+      className="w-full text-left py-2 px-4 bg-gray-100 hover:bg-gray-200 transition"
+      onClick={onToggle}
+    >
+      <h3 className="sm:text-lg text-sm font-bold" data-aos="fade-up">
+        {title}
+      </h3>
+    </button>
+    {isOpen && <div className="p-4 bg-gray-50">{children}</div>}
+  </div>
+);
+
+interface ProgramItemProps {
+  title: string;
+  details: string[];
+}
+
+const ProgramItem: React.FC<ProgramItemProps> = ({ title, details }) => {
+  const getLink = (title: string): string | null => {
+    if (title.toLowerCase().includes("teachers")) {
+      return "/programs/2025-southeast-teachers-competition-registration-form";
+    }
+    if (title.toLowerCase().includes("astc")) {
+      return "/programs/2025-anambra-state-teachers-competition-registration-form";
+    }
+    if (title.toLowerCase().includes("weekly")) {
+      return "/programs/bbc-weekly-online-quiz-registration-form";
+    }
+    return null;
+  };
+
+  const link = getLink(title);
+
+  return (
+    <div className="mb-3">
+      {link ? (
+        <Link to={link}>
+          <h4
+            className="text-sm font-medium text-blue-600 underline cursor-pointer"
+            data-aos="fade-up"
+          >
+            {title}
+          </h4>
+        </Link>
+      ) : (
+        <h4 className="text-sm font-bold" data-aos="fade-up">
+          {title}
+        </h4>
+      )}
+      <ul className="pl-5">
+        {details.map((detail, index) => (
+          <li key={index} className="text-sm" data-aos="fade-up">
+            {detail.includes("2023 Scholarship Beneficiaries") ? (
+              <Link
+                to="/programs/2023-scholarship-beneficiaries"
+                className="text-blue-600 underline"
+              >
+                {detail}
+              </Link>
+            ) : detail.includes("2024 Scholarship Beneficiaries") ? (
+              <Link
+                to="/programs/2024-scholarship-beneficiaries"
+                className="text-blue-600 underline"
+              >
+                {detail}
+              </Link>
+            ) : (
+              detail
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const Programs = () => {
   useEffect(() => {
@@ -120,7 +223,7 @@ const Programs = () => {
   const [openIndex, setOpenIndex] = useState<string | null>(null);
 
   const toggleAccordion = (index: string) => {
-    setOpenIndex(openIndex === index ? null : index);
+    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
   return (
@@ -140,102 +243,20 @@ const Programs = () => {
             {program.subcategories.map((sub, subIndex) => {
               const uniqueKey = `${index}-${subIndex}`;
               return (
-                <div key={uniqueKey} className="border-b border-gray-300 mb-4">
-                  <button
-                    className="w-full text-left py-2 px-4 bg-gray-100 hover:bg-gray-200 transition"
-                    onClick={() => toggleAccordion(uniqueKey)}
-                  >
-                    <h3
-                      className="sm:text-lg text-sm font-bold"
-                      data-aos="fade-up"
-                    >
-                      {sub.title}
-                    </h3>
-                  </button>
-                  {openIndex === uniqueKey && (
-                    <div className="p-4 bg-gray-50">
-                      {sub.items.map((item, itemIndex) => {
-                        const isTeachers = item.title
-                          .toLowerCase()
-                          .includes("teachers");
-                        const isAnambraTeachers = item.title
-                          .toLowerCase()
-                          .includes("astc");
-                        const is2023Beneficiaries = item.details.map((det) =>
-                          det
-                            .toLowerCase()
-                            .includes("2023 scholarship beneficiaries")
-                        );
-                        const is2024Beneficiaries = item.details.map((det) =>
-                          det
-                            .toLowerCase()
-                            .includes("2024 scholarship beneficiaries")
-                        );
-                        return (
-                          <div key={itemIndex} className="mb-3">
-                            {isTeachers ? (
-                              <Link to="/programs/2025-southeast-teachers-competition-registration-form">
-                                <h4
-                                  className="text-sm font-medium text-blue-600 underline cursor-pointer"
-                                  data-aos="fade-up"
-                                >
-                                  {item.title}
-                                </h4>
-                              </Link>
-                            ) : isAnambraTeachers ? (
-                              <Link to="/programs/2025-anambra-state-teachers-competition-registration-form">
-                                <h4
-                                  className="text-sm font-medium text-blue-600 underline cursor-pointer"
-                                  data-aos="fade-up"
-                                >
-                                  {item.title}
-                                </h4>
-                              </Link>
-                            ) : (
-                              <h4
-                                className="text-sm font-bold"
-                                data-aos="fade-up"
-                              >
-                                {item.title}
-                              </h4>
-                            )}
-                            <ul className="pl-5">
-                              {item.details.map((detail, detailIndex) => (
-                                <li
-                                  key={detailIndex}
-                                  className="text-sm"
-                                  data-aos="fade-up"
-                                >
-                                  {is2023Beneficiaries &&
-                                  detail ===
-                                    "2023 Scholarship Beneficiaries" ? (
-                                    <Link
-                                      to="/programs/2023-scholarship-beneficiaries"
-                                      className="text-blue-600 underline"
-                                    >
-                                      {detail}
-                                    </Link>
-                                  ) : is2024Beneficiaries &&
-                                    detail ===
-                                      "2024 Scholarship Beneficiaries" ? (
-                                    <Link
-                                      to="/programs/2024-scholarship-beneficiaries"
-                                      className="text-blue-600 underline"
-                                    >
-                                      {detail}
-                                    </Link>
-                                  ) : (
-                                    detail
-                                  )}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
+                <ProgramAccordion
+                  key={uniqueKey}
+                  title={sub.title}
+                  isOpen={openIndex === uniqueKey}
+                  onToggle={() => toggleAccordion(uniqueKey)}
+                >
+                  {sub.items.map((item, itemIndex) => (
+                    <ProgramItem
+                      key={itemIndex}
+                      title={item.title}
+                      details={item.details}
+                    />
+                  ))}
+                </ProgramAccordion>
               );
             })}
           </div>
