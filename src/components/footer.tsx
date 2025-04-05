@@ -1,5 +1,5 @@
 import { FaFacebook, FaMapMarkerAlt, FaInstagram } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import initializeAOS from "../utils/aos-init";
 
@@ -31,10 +31,6 @@ const quickLinks = [
     text: "Our Programs",
     href: "/programs",
   },
-  //   {
-  //     text: "Our Gallery",
-  //     href: "/gallery",
-  //   },
   {
     text: "Our Blog",
     href: "/blog",
@@ -46,8 +42,10 @@ export default function Footer() {
     initializeAOS();
   }, []);
 
+  const location = useLocation();
+
   return (
-    <div className="w-full bg-[#071125] text-white text-body1 mt-20">
+    <div className={`w-full bg-[#071125] text-white text-body1 ${location.pathname.includes("admin") ? 'mt-0' : 'mt-20'}`}>
       <div className="flex sm:flex-row flex-col justify-between items-start sm:p-6 p-3">
         <div className="sm:w-1/3" data-aos="fade-up">
           <h1 className="text-lg font-bold">LOCATE US</h1>

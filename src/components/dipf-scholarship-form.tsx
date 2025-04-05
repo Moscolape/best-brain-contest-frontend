@@ -6,6 +6,7 @@ import { statesData } from "../utils/statesdata";
 import { dipfHeader } from "../constants/assets";
 import BeneficiariesTable2023 from "./2023-scholarship-beneficiaries";
 import BeneficiariesTable2024 from "./2024-scholarship-beneficiaries";
+import { useAuth } from "../hooks/use-auth";
 
 interface BeneficiaryData {
   beneficiaryName: string;
@@ -31,8 +32,8 @@ const BeneficiaryForm = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<
     "beneficiaries" | "beneficiaryForm"
-  >("beneficiaryForm");
-  //   const navigate = useNavigate();
+  >("beneficiaries");
+  const { roleAccess } = useAuth();
 
   const {
     register,
@@ -80,31 +81,37 @@ const BeneficiaryForm = () => {
       />
       {/* Toggle Tabs with Sliding Effect */}
       <div className="mb-6 flex justify-center relative">
-        <div className="relative flex bg-gray-200 p-1 rounded-lg w-[22rem] font-Montserrat">
-          <div
-            className={`absolute top-0 left-0 h-full w-1/2 bg-[#071125] transition-all duration-300 ${
-              activeTab === "beneficiaries"
-                ? "translate-x-full rounded-r-lg"
-                : "translate-x-0 rounded-l-lg"
-            }`}
-          ></div>
-          <button
-            className={`relative z-10 flex-1 py-2 font-semibold transition duration-300 cursor-pointer ${
-              activeTab === "beneficiaryForm" ? "text-white" : "text-gray-700"
-            }`}
-            onClick={() => setActiveTab("beneficiaryForm")}
-          >
-            Beneficiary Form
-          </button>
-          <button
-            className={`relative z-10 flex-1 py-2 font-semibold transition duration-300 cursor-pointer ${
-              activeTab === "beneficiaries" ? "text-white" : "text-gray-700"
-            }`}
-            onClick={() => setActiveTab("beneficiaries")}
-          >
+        {roleAccess === "admin" ? (
+          <div className="relative flex bg-gray-200 p-1 rounded-lg w-[22rem] font-Montserrat">
+            <div
+              className={`absolute top-0 left-0 h-full w-1/2 bg-[#071125] transition-all duration-300 ${
+                activeTab === "beneficiaries"
+                  ? "translate-x-full rounded-r-lg"
+                  : "translate-x-0 rounded-l-lg"
+              }`}
+            ></div>
+            <button
+              className={`relative z-10 flex-1 py-2 font-semibold transition duration-300 cursor-pointer ${
+                activeTab === "beneficiaryForm" ? "text-white" : "text-gray-700"
+              }`}
+              onClick={() => setActiveTab("beneficiaryForm")}
+            >
+              Beneficiary Form
+            </button>
+            <button
+              className={`relative z-10 flex-1 py-2 font-semibold transition duration-300 cursor-pointer ${
+                activeTab === "beneficiaries" ? "text-white" : "text-gray-700"
+              }`}
+              onClick={() => setActiveTab("beneficiaries")}
+            >
+              Beneficiaries
+            </button>
+          </div>
+        ) : (
+          <button className="relative w-40 inline-block py-2 font-semibold transition duration-300 border-none rounded-lg text-white bg-[#071125]">
             Beneficiaries
           </button>
-        </div>
+        )}
       </div>
       {activeTab === "beneficiaryForm" ? (
         <div className="p-6 sm:bg-gray-100 rounded-md sm:shadow-lg max-w-3xl mx-auto ">

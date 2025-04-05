@@ -6,6 +6,7 @@ interface AuthContextType {
   roleAccess: string | null;
   login: (token: string, roleAccess: string) => void;
   logout: () => void;
+  setRoleAccess: (role: string | null) => void;
 }
 
 // ✅ Export AuthContext separately

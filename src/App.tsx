@@ -11,7 +11,13 @@ const Blog = lazy(() => import("./pages/blog"));
 const Contact = lazy(() => import("./pages/contact"));
 const Gallery = lazy(() => import("./pages/gallery"));
 
-const SignUp = lazy(() => import("./pages/signup"));
+const AdminLayout = lazy(() => import('./components/admin-layout'));
+const Dashboard = lazy(() => import('./components/admin-dashboard'));
+const QuestionList = lazy(() => import('./components/questions'));
+const QuestionForm = lazy(() => import('./components/question-form'));
+// const PublishWeek = lazy(() => import('./components/publish-week'));
+
+// const SignUp = lazy(() => import("./pages/signup"));
 const Login = lazy(() => import("./pages/login"));
 
 const AnambraTeachersForm = lazy(
@@ -33,7 +39,6 @@ const ScholarshipBeneficiaries2023 = lazy(
 const ScholarshipBeneficiaries2024 = lazy(
   () => import("./components/2024-scholarship-beneficiaries")
 );
-
 
 const TakeQuiz = lazy(() => import("./pages/take-quiz"));
 const QuizInProgress = lazy(() => import("./components/quiz-in-progress"));
@@ -58,11 +63,17 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/take-quiz" element={<TakeQuiz />} />
 
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="questions" element={<QuestionList />} />
+            <Route path="questions/new" element={<QuestionForm />} />
+            <Route path="questions/:id" element={<QuestionForm />} />
+            {/* <Route path="publish" element={<PublishWeek />} /> */}
+          </Route>
 
           <Route path="/take-quiz/questions" element={<QuizInProgress />} />
 
-
-          <Route path="/signup" element={<SignUp />} />
+          {/* <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/login" element={<Login />} />
 
           <Route path="/scholarship-form" element={<ScholarshipForm />} />
