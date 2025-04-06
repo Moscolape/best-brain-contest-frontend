@@ -27,7 +27,7 @@ const ImageSlider: React.FC<SliderProps> = ({ images, interval = 3000, title }) 
   };
 
   return (
-    <div className="relative sm:w-3/5 w-full mx-auto my-10 overflow-hidden" data-aos="fade-up">
+    <div className="relative sm:w-4/5 w-full mx-auto my-10 overflow-hidden" data-aos="fade-up">
       <div className="relative flex items-center justify-center">
         <button
           className="absolute cursor-pointer left-2 bg-black bg-opacity-50 text-white p-3 rounded-full z-10"

@@ -1,5 +1,3 @@
-// src/components/QuestionList.tsx
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +5,8 @@ interface Question {
   _id: string;
   prompt: string;
   type: string;
-  week: string;
+  points: string;
+  day: string;
 }
 
 const QuestionList: React.FC = () => {
@@ -79,19 +78,21 @@ const QuestionList: React.FC = () => {
       <table className="w-full bg-white shadow rounded">
         <thead>
           <tr>
-            <th className="p-2 text-left">Prompt</th>
-            <th className="p-2 text-left">Type</th>
-            <th className="p-2 text-left">Week</th>
-            <th className="p-2 text-left">Actions</th>
+            <th className="p-2 text-left w-[35%]">Prompt</th>
+            <th className="p-2 text-left w-[15%]">Type</th>
+            <th className="p-2 text-left w-[15%]">Points</th>
+            <th className="p-2 text-left w-[15%]">Day</th>
+            <th className="p-2 text-left w-[20%]">Actions</th>
           </tr>
         </thead>
         <tbody>
           {questions.map((q) => (
             <tr key={q._id} className="border-t">
-              <td className="p-2">{q.prompt}</td>
-              <td className="p-2">{q.type}</td>
-              <td className="p-2">{q.week}</td>
-              <td className="p-2 space-x-2">
+              <td className="p-2 w-[35%]">{q.prompt}</td>
+              <td className="p-2 w-[15%]">{q.type}</td>
+              <td className="p-2 w-[15%]">{q.points}</td>
+              <td className="p-2 w-[15%]">{q.day}</td>
+              <td className="p-2 space-x-2 w-[20%]">
                 <button
                   onClick={() => navigate(`/admin/questions/${q._id}`)}
                   className="px-2 py-1 bg-yellow-500 text-white rounded"

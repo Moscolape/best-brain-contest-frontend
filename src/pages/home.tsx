@@ -5,6 +5,7 @@ import initializeAOS from "../utils/aos-init";
 import {
   bestlanding,
   CEO,
+  flier,
   flier1,
   flier2,
   flier3,
@@ -182,26 +183,58 @@ const Home = () => {
           <p className="sm:text-xl text-sm">Dr. Frank Odinaka Igbojindu</p>
         </div>
       </div>
-      <div className="font-Montserrat sm:w-4/5 mx-auto p-2" data-aos="fade-up">
+      <div className="font-Montserrat mx-auto p-2" data-aos="fade-up">
         <h1 className="sm:text-5xl text-2xl font-Urbanist font-bold text-center">
           Maiden Competition of Anambra State Mathematics & Igbo Quiz
           Competition 2021
         </h1>
-        {/* Image Slider */}
-        <ImageSlider images={slider1} title="Participants in the competition" />
-        <ImageSlider
-          images={slider2}
-          title="Officiating committee members of the competition"
-        />
-        <ImageSlider
-          images={slider3}
-          title="Photos of some School Representatives"
-        />
-        <ImageSlider
-          images={slider4}
-          title="Photos of some Competition Winners and Beneficiaries"
-        />
+        <div className="sm:grid sm:grid-cols-2">
+          {/* Image Slider */}
+          <ImageSlider images={slider1} title="Participants in the competition" />
+          <ImageSlider
+            images={slider2}
+            title="Officiating committee members of the competition"
+          />
+          <ImageSlider
+            images={slider3}
+            title="Photos of some School Representatives"
+          />
+          <ImageSlider
+            images={slider4}
+            title="Photos of some Competition Winners and Beneficiaries"
+          />
+        </div>
       </div>
+      {/* Weekly Quiz Competition Section */}
+      <div
+        className="font-Montserrat sm:w-4/5 mx-auto flex flex-col sm:flex-row items-center justify-between gap-10 my-20 p-4 bg-[#f8f8f8] sm:rounded-lg sm:shadow-md"
+        data-aos="fade-up"
+      >
+        {/* Image */}
+        <img
+          src={flier}
+          alt="Weekly Quiz"
+          className="sm:w-1/2 w-full rounded-lg object-cover"
+        />
+
+        {/* Content */}
+        <div className="sm:w-1/2 w-full flex flex-col justify-center items-start text-[#071125] space-y-4">
+          <h2 className="text-2xl sm:text-3xl font-Urbanist font-bold">
+            Join Our Weekly Quiz Competition!
+          </h2>
+          <p className="text-base sm:text-lg">
+            Compete with brilliant minds across the country every week and stand
+            a chance to win a cash prize of <b>ten thousand naira (#10,000)</b>, sharpen your skills, and gain
+            national recognition.
+          </p>
+          <Link to="/programs/bbc-weekly-online-quiz-registration-form">
+            <button className="px-6 py-3 bg-[#071125] text-white hover:bg-[#ffcc2a] hover:text-[#071125] hover:font-medium transition-all cursor-pointer">
+              Register Now
+            </button>
+          </Link>
+        </div>
+      </div>
+
       <div
         className="font-Montserrat sm:w-1/3 mx-auto flex flex-col justify-center items-center sm:text-center mt-10"
         data-aos="fade-up"

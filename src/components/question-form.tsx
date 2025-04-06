@@ -9,7 +9,7 @@ interface FormState {
   options: string[];
   correctAnswers: string[];
   correctAnswer: string;
-  week: string;
+  day: string;
   points: number;
 }
 
@@ -18,11 +18,11 @@ export default function QuestionForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState<FormState>({
     prompt: "",
-    type: "multiple-choice",
+    type: "objective",
     options: ["", "", "", ""],
     correctAnswers: [""],
     correctAnswer: "",
-    week: "",
+    day: "",
     points: 1,
   });
 
@@ -163,10 +163,11 @@ export default function QuestionForm() {
         )}
 
         <div>
-          <label className="block">Week (e.g. 2025-W15)</label>
+          <label className="block">Day</label>
           <input
-            name="week"
-            value={form.week}
+            name="day"
+            type="date"
+            value={form.day}
             onChange={handleChange}
             className="w-full border p-2"
           />

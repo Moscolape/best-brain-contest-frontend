@@ -1,25 +1,99 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { questions } from "../utils/questions";
 import PageWrapper from "./pageWrapper";
 
-const QUIZ_DURATION = 15 * 60 * 1000;
+const QUIZ_DURATION = 60 * 60 * 1000; // 1 hour
+
+type Question = {
+  _id: string;
+  prompt: string;
+  options: string[];
+  type: string;
+};
 
 const QuizInProgress = () => {
   const navigate = useNavigate();
   const [quizTimeLeft, setQuizTimeLeft] = useState(QUIZ_DURATION);
-  const [answers, setAnswers] = useState<{ [key: number]: string }>({});
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [answers, setAnswers] = useState<{ [key: string]: string | string[] }>(
+    () => JSON.parse(localStorage.getItem("quizAnswers") || "{}")
+  );
 
-  const handleSelect = (questionId: number, option: string) => {
-    setAnswers({ ...answers, [questionId]: option });
+  const [scoreData, setScoreData] = useState<null | {
+    score: number;
+    percentage: number;
+    totalPoints: number;
+  }>(null);
+
+  const [loading, setLoading] = useState(true);
+  const [hasSubmitted, setHasSubmitted] = useState(() =>
+    JSON.parse(localStorage.getItem("hasSubmitted") || "false")
+  );
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    if (hasSubmitted) return;
+    setHasSubmitted(true);
+    localStorage.setItem("hasSubmitted", "true");
+
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/quiz/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ answers }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Failed to submit quiz");
+        throw new Error(data.message);
+      }
+
+      setScoreData(data);
+      localStorage.removeItem("quizAnswers");
+    } catch (error) {
+      console.error("Submission error:", error);
+      setHasSubmitted(false);
+      localStorage.setItem("hasSubmitted", "false");
+    }
   };
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/admin/questions?day=2025-04-12"
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(data.message || "Failed to fetch questions");
+          throw new Error(data.message);
+        }
+
+        setQuestions(data);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
 
   useEffect(() => {
     const targetTime = new Date("April 12, 2025 18:00:00").getTime();
     const endTime = targetTime + QUIZ_DURATION;
 
     const quizTimer = setInterval(() => {
-      const now = new Date().getTime();
+      const now = Date.now();
       const remainingTime = endTime - now;
       setQuizTimeLeft(remainingTime);
 
@@ -32,6 +106,30 @@ const QuizInProgress = () => {
     return () => clearInterval(quizTimer);
   }, [navigate]);
 
+  useEffect(() => {
+    localStorage.setItem("quizAnswers", JSON.stringify(answers));
+  }, [answers]);
+
+  const handleSelect = (questionId: string, option: string) => {
+    const question = questions.find((q) => q._id === questionId);
+    if (!question) return;
+
+    if (question.type === "multiple-choice") {
+      const selectedOptions = new Set((answers[questionId] as string[]) || []);
+      if (selectedOptions.has(option)) {
+        selectedOptions.delete(option);
+      } else {
+        selectedOptions.add(option);
+      }
+      setAnswers({
+        ...answers,
+        [questionId]: Array.from(selectedOptions),
+      });
+    } else {
+      setAnswers({ ...answers, [questionId]: option });
+    }
+  };
+
   const formatTime = (ms: number) => {
     if (ms <= 0) return "00m 00s";
     const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
@@ -41,8 +139,10 @@ const QuizInProgress = () => {
 
   return (
     <PageWrapper>
-      <div className="w-full max-w-3xl mx-auto sm:mt-30 p-6 bg-white shadow-lg rounded-lg font-Montserrat">
-        <h2 className="text-2xl font-bold mb-4 text-center">Quiz in Progress</h2>
+      <div className="w-full max-w-3xl mx-auto sm:mt-30 p-6 bg-white sm:shadow-lg rounded-lg font-Montserrat">
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Quiz in Progress
+        </h2>
         <p className="text-xl font-medium">
           <b>Time Remaining:</b> {formatTime(quizTimeLeft)}
         </p>
@@ -50,26 +150,91 @@ const QuizInProgress = () => {
           Answer the questions before time runs out.
         </p>
 
-        <div className="mt-4">
-          {questions.map((q) => (
-            <div key={q.id} className="mb-4">
-              <p className="font-semibold">{q.question}</p>
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                {q.options.map((option) => (
-                  <button
-                    key={option}
-                    className={`p-2 border rounded-lg text-left hover:bg-gray-200 ${
-                      answers[q.id] === option ? "bg-blue-500 text-white" : ""
-                    }`}
-                    onClick={() => handleSelect(q.id, option)}
-                  >
-                    {option}
-                  </button>
-                ))}
+        {loading ? (
+          <div className="flex items-center justify-center h-[10vh]">
+            <div className="w-8 h-8 border-4 border-[#071125] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="mt-4">
+            {questions.map((q, idx) => (
+              <div key={q._id} className="mb-6">
+                <p className="font-semibold">
+                  {idx + 1}. {q.prompt}
+                </p>
+
+                {q.type === "multiple-choice" ? (
+                  <div className="mt-2 space-y-2">
+                    {q.options.map((option) => {
+                      const selected =
+                        (answers[q._id] as string[] | undefined) || [];
+                      return (
+                        <label
+                          key={option}
+                          className="flex items-center space-x-2 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selected.includes(option)}
+                            disabled={hasSubmitted}
+                            onChange={() => handleSelect(q._id, option)}
+                            className="form-checkbox h-5 w-5 text-blue-600"
+                          />
+                          <span>{option}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    {q.options.map((option) => {
+                      const isSelected = answers[q._id] === option;
+                      return (
+                        <button
+                          key={option}
+                          disabled={hasSubmitted}
+                          className={`p-2 border rounded-lg text-left transition hover:bg-gray-100 ${
+                            isSelected ? "bg-blue-500 text-white" : ""
+                          }`}
+                          onClick={() => handleSelect(q._id, option)}
+                        >
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
+        {error && (
+          <div className="mt-4 text-red-600 font-medium text-center">
+            {error}
+          </div>
+        )}
+
+        {!loading && questions.length > 0 && !scoreData && (
+          <div className="mt-6 text-center">
+            <button
+              onClick={handleSubmit}
+              disabled={hasSubmitted}
+              className="px-6 py-3 bg-green-600 text-white font-bold rounded hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              {hasSubmitted ? "Submitting..." : "Submit Quiz"}
+            </button>
+          </div>
+        )}
+
+        {scoreData && (
+          <div className="mt-6 text-center">
+            <h3 className="text-xl font-semibold text-blue-600">Your Score:</h3>
+            <p className="text-lg">
+              {scoreData.score} / {scoreData.totalPoints} (
+              {scoreData.percentage}%)
+            </p>
+          </div>
+        )}
       </div>
     </PageWrapper>
   );

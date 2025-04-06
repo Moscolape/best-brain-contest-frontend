@@ -12,6 +12,7 @@ import landingPage3 from "../assets/bg2.jpeg";
 import landingPage4 from "../assets/bg3.jpeg";
 import CEO from "../assets/CEO.png";
 import bestlanding from "../assets/best-landing.jpeg";
+import flier from "../assets/flier.jpeg";
 import flier1 from "../assets/flier1.jpeg";
 import flier2 from "../assets/flier2.jpeg";
 import flier3 from "../assets/flier3.jpeg";
@@ -57,6 +58,7 @@ export {
   landingPage4,
   CEO,
   bestlanding,
+  flier,
   flier1,
   flier2,
   flier3,
