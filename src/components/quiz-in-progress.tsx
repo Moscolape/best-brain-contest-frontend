@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "./pageWrapper";
 
-const QUIZ_DURATION = 60 * 60 * 1000;
+const QUIZ_DURATION = 10 * 60 * 1000;
 
 type Question = {
   _id: string;
