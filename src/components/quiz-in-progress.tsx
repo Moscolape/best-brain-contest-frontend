@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "./pageWrapper";
 
-const QUIZ_DURATION = 60 * 60 * 1000; // 1 hour
+const QUIZ_DURATION = 10 * 60 * 1000;
 
 type Question = {
   _id: string;
@@ -35,40 +35,49 @@ const QuizInProgress = () => {
     if (hasSubmitted) return;
     setHasSubmitted(true);
     localStorage.setItem("hasSubmitted", "true");
-
+  
     setError("");
-
+  
+    const email = localStorage.getItem("quizUserEmail");
+  
     try {
-      const response = await fetch("http://localhost:5000/api/quiz/submit", {
+      const response = await fetch("https://best-brain-contest-backend.onrender.com/api/quiz/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ answers }),
+        body: JSON.stringify({
+          answers,
+          email,
+        }),
       });
-
+  
       const data = await response.json();
-
+  
       if (!response.ok) {
         setError(data.message || "Failed to submit quiz");
         throw new Error(data.message);
       }
-
+  
       setScoreData(data);
       localStorage.removeItem("quizAnswers");
+  
+      alert("Your score has been mailed to you.");
+      navigate("/", { replace: true });
+  
     } catch (error) {
       console.error("Submission error:", error);
       setHasSubmitted(false);
       localStorage.setItem("hasSubmitted", "false");
     }
   };
-
+  
   useEffect(() => {
     const fetchQuestions = async () => {
       setLoading(true);
       try {
         const response = await fetch(
-          "http://localhost:5000/api/admin/questions?day=2025-04-12"
+          "https://best-brain-contest-backend.onrender.com/api/admin/questions?day=2025-04-12"
         );
         const data = await response.json();
 
@@ -219,14 +228,14 @@ const QuizInProgress = () => {
             <button
               onClick={handleSubmit}
               disabled={hasSubmitted}
-              className="px-6 py-3 bg-green-600 text-white font-bold rounded hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-green-600 text-white font-bold rounded hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
             >
               {hasSubmitted ? "Submitting..." : "Submit Quiz"}
             </button>
           </div>
         )}
 
-        {scoreData && (
+        {/* {scoreData && (
           <div className="mt-6 text-center">
             <h3 className="text-xl font-semibold text-blue-600">Your Score:</h3>
             <p className="text-lg">
@@ -234,7 +243,7 @@ const QuizInProgress = () => {
               {scoreData.percentage}%)
             </p>
           </div>
-        )}
+        )} */}
       </div>
     </PageWrapper>
   );

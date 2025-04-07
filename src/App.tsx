@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import "./App.css";
+import ProtectedRoute from "./components/protected-routes";
 
 const Home = lazy(() => import("./pages/home"));
 const About = lazy(() => import("./pages/about"));
@@ -63,12 +64,14 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/take-quiz" element={<TakeQuiz />} />
 
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="questions" element={<QuestionList />} />
-            <Route path="questions/new" element={<QuestionForm />} />
-            <Route path="questions/:id" element={<QuestionForm />} />
-            {/* <Route path="publish" element={<PublishWeek />} /> */}
+          {/* Protect Admin Routes */}
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="questions" element={<QuestionList />} />
+              <Route path="questions/new" element={<QuestionForm />} />
+              <Route path="questions/:id" element={<QuestionForm />} />
+            </Route>
           </Route>
 
           <Route path="/take-quiz/questions" element={<QuizInProgress />} />

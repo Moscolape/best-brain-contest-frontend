@@ -75,11 +75,11 @@ export default function NavLinks() {
   }
   
   const handleLogout = () => {
+    navigate("/");
     localStorage.removeItem("authToken");
     localStorage.removeItem("roleAccess");
     setRoleAccess(null);
     setIsAuthenticated(false);
-    navigate("/");
   };
 
   const authLink = isAuthenticated

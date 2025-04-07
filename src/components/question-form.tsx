@@ -28,7 +28,7 @@ export default function QuestionForm() {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:5000/api/admin/questions/${id}`)
+      fetch(`https://best-brain-contest-backend.onrender.com/api/admin/questions/${id}`)
         .then((res) => res.json())
         .then((data: FormState) => setForm(data));
     }
@@ -62,8 +62,8 @@ export default function QuestionForm() {
     try {
       const method = id ? "PUT" : "POST";
       const url = id
-        ? `http://localhost:5000/api/admin/questions/${id}`
-        : `http://localhost:5000/api/admin/questions`;
+        ? `https://best-brain-contest-backend.onrender.com/api/admin/questions/${id}`
+        : `https://best-brain-contest-backend.onrender.com/api/admin/questions`;
   
       const response = await fetch(url, {
         method,

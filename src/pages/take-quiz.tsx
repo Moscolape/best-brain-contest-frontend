@@ -45,6 +45,7 @@ const TakeQuiz = () => {
     try {
       const response = await fetch(
         "https://best-brain-contest-backend.onrender.com/api/verify-quiz",
+        // "http://localhost:5000/api/verify-quiz",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -57,6 +58,9 @@ const TakeQuiz = () => {
         setMessage(result.message);
         throw new Error(result.message || "Invalid email or quiz code.");
       }
+
+      localStorage.setItem("quizUserEmail", email);
+      localStorage.removeItem("hasSubmitted");
 
       setMessage("Access granted. Starting quiz...");
       setTimeout(() => {
@@ -109,8 +113,8 @@ const TakeQuiz = () => {
             </form>
             {message && (
               <p
-                className={`mt-4 ${
-                  message.toLowerCase().includes("invalid")
+                className={`mt-4 text-center ${
+                  message.toLowerCase().includes("invalid") || message.toLowerCase().includes("already")
                     ? "text-red-700"
                     : "text-green-700"
                 }`}

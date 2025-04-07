@@ -44,7 +44,7 @@ const QuestionList: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/questions/${id}`, {
+      const response = await fetch(`https://best-brain-contest-backend.onrender.com/api/admin/questions/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
