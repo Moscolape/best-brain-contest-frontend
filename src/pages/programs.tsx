@@ -167,6 +167,9 @@ const ProgramItem: React.FC<ProgramItemProps> = ({ title, details }) => {
     if (title.toLowerCase().includes("weekly")) {
       return "/programs/bbc-weekly-online-quiz-registration-form";
     }
+    if (title.toLowerCase() === "about the quiz") {
+      return "/programs/about-bbc-weekly-online-quiz";
+    }
     return null;
   };
 

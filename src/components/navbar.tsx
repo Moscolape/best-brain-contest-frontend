@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 import { useAuth } from "../hooks/use-auth";
 
 const baseLinks = [
-  { name: "About", href: "/about" },
+  { name: "About", href: "/about-us" },
   { name: "Services", href: "/services" },
   { name: "Programs", href: "/programs" },
   { name: "Blog", href: "/blog" },

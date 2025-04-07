@@ -41,6 +41,8 @@ const ScholarshipBeneficiaries2023 = lazy(
 const ScholarshipBeneficiaries2024 = lazy(
   () => import("./components/2024-scholarship-beneficiaries")
 );
+const AboutBBCQuiz = lazy(() => import("./components/about-bbc-weekly-quiz"));
+
 
 const TakeQuiz = lazy(() => import("./pages/take-quiz"));
 const QuizInProgress = lazy(() => import("./components/quiz-in-progress"));
@@ -57,7 +59,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about-us" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/programs" element={<Programs />} />
           <Route path="/blog" element={<Blog />} />
@@ -85,6 +87,10 @@ function App() {
           <Route
             path="/programs/bbc-weekly-online-quiz-registration-form"
             element={<WeeeklyQuizForm />}
+          />
+          <Route
+            path="/programs/about-bbc-weekly-online-quiz"
+            element={<AboutBBCQuiz />}
           />
 
           <Route
