@@ -4,9 +4,9 @@ import PageWrapper from "./pageWrapper";
 export default function AdminLayout() {
   return (
     <PageWrapper>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen font-Montserrat">
         <aside className="w-64 bg-[#071125] text-white p-4 border-b-gray-100 border-b-2">
-          <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
+          <h2 className="text-xl font-bold mb-4">ADMIN PANEL</h2>
           <nav className="space-y-2">
             <NavLink
               to="/admin"
@@ -42,6 +42,18 @@ export default function AdminLayout() {
               }
             >
               Create Question
+            </NavLink>
+
+            <NavLink
+              to="/admin/quiz-submissions"
+              end
+              className={({ isActive }) =>
+                isActive
+                  ? "block text-blue-500 font-bold"
+                  : "block hover:text-blue-300"
+              }
+            >
+              Quiz Submissions
             </NavLink>
           </nav>
         </aside>

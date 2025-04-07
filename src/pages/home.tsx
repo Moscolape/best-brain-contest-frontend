@@ -135,7 +135,7 @@ const Home = () => {
       </div>
       <div className="my-10">
         <h1
-          className="text-[#071125] sm:text-5xl text-2xl text-center font-semibold font-Prism"
+          className="text-[#071125] sm:text-5xl text-2xl text-center font-semibold font-Prism mb-5"
           data-aos="fade-down"
         >
           Welcome to our Official Website

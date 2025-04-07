@@ -16,6 +16,7 @@ const AdminLayout = lazy(() => import('./components/admin-layout'));
 const Dashboard = lazy(() => import('./components/admin-dashboard'));
 const QuestionList = lazy(() => import('./components/questions'));
 const QuestionForm = lazy(() => import('./components/question-form'));
+const CheckSubmissions = lazy(() => import('./components/check-submissions'));
 // const PublishWeek = lazy(() => import('./components/publish-week'));
 
 // const SignUp = lazy(() => import("./pages/signup"));
@@ -71,6 +72,7 @@ function App() {
               <Route path="questions" element={<QuestionList />} />
               <Route path="questions/new" element={<QuestionForm />} />
               <Route path="questions/:id" element={<QuestionForm />} />
+              <Route path="quiz-submissions" element={<CheckSubmissions />} />
             </Route>
           </Route>
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "./pageWrapper";
 
-const QUIZ_DURATION = 10 * 60 * 1000;
+const QUIZ_DURATION = 60 * 60 * 1000;
 
 type Question = {
   _id: string;
@@ -42,6 +42,7 @@ const QuizInProgress = () => {
   
     try {
       const response = await fetch("https://best-brain-contest-backend.onrender.com/api/quiz/submit", {
+      // const response = await fetch("http://localhost:5000/api/quiz/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
