@@ -96,9 +96,6 @@ const AllParticipants: React.FC = () => {
                   Phone
                 </th>
                 <th className="px-4 py-2 border-b text-left text-gray-700">
-                  Email
-                </th>
-                <th className="px-4 py-2 border-b text-left text-gray-700">
                   Gender
                 </th>
                 <th className="px-4 py-2 border-b text-left text-gray-700">
@@ -123,9 +120,6 @@ const AllParticipants: React.FC = () => {
                   </td>
                   <td className="px-4 py-2 border-b text-gray-800">
                     {p.phoneNumber}
-                  </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {p.email}
                   </td>
                   <td className="px-4 py-2 border-b text-gray-800">
                     {p.gender}
