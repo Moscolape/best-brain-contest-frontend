@@ -55,6 +55,18 @@ export default function AdminLayout() {
             >
               Quiz Submissions
             </NavLink>
+
+            <NavLink
+              to="/admin/quiz-participants"
+              end
+              className={({ isActive }) =>
+                isActive
+                  ? "block text-blue-500 font-bold"
+                  : "block hover:text-blue-300"
+              }
+            >
+              Quiz Participants
+            </NavLink>
           </nav>
         </aside>
         <main className="flex-1 p-6 bg-gray-100">

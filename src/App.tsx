@@ -12,11 +12,11 @@ const Blog = lazy(() => import("./pages/blog"));
 const Contact = lazy(() => import("./pages/contact"));
 const Gallery = lazy(() => import("./pages/gallery"));
 
-const AdminLayout = lazy(() => import('./components/admin-layout'));
-const Dashboard = lazy(() => import('./components/admin-dashboard'));
-const QuestionList = lazy(() => import('./components/questions'));
-const QuestionForm = lazy(() => import('./components/question-form'));
-const CheckSubmissions = lazy(() => import('./components/check-submissions'));
+const AdminLayout = lazy(() => import("./components/admin-layout"));
+const Dashboard = lazy(() => import("./components/admin-dashboard"));
+const QuestionList = lazy(() => import("./components/questions"));
+const QuestionForm = lazy(() => import("./components/question-form"));
+const CheckSubmissions = lazy(() => import("./components/check-submissions"));
 // const PublishWeek = lazy(() => import('./components/publish-week'));
 
 // const SignUp = lazy(() => import("./pages/signup"));
@@ -43,9 +43,12 @@ const ScholarshipBeneficiaries2024 = lazy(
 );
 const AboutBBCQuiz = lazy(() => import("./components/about-bbc-weekly-quiz"));
 
-
 const TakeQuiz = lazy(() => import("./pages/take-quiz"));
 const QuizInProgress = lazy(() => import("./components/quiz-in-progress"));
+
+const AllParticipants = lazy(
+  () => import("./components/all-quiz-participants")
+);
 
 function App() {
   return (
@@ -75,6 +78,7 @@ function App() {
               <Route path="questions/new" element={<QuestionForm />} />
               <Route path="questions/:id" element={<QuestionForm />} />
               <Route path="quiz-submissions" element={<CheckSubmissions />} />
+              <Route path="quiz-participants" element={<AllParticipants />} />
             </Route>
           </Route>
 
