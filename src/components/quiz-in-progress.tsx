@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "./pageWrapper";
 
@@ -25,54 +25,54 @@ const QuizInProgress = () => {
     totalPoints: number;
   }>(null);
 
+  const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hasSubmitted, setHasSubmitted] = useState(() =>
     JSON.parse(localStorage.getItem("hasSubmitted") || "false")
   );
   const [error, setError] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (hasSubmitted) return;
+
     setHasSubmitted(true);
+    setSubmitting(true);
     localStorage.setItem("hasSubmitted", "true");
-  
     setError("");
-  
+
     const email = localStorage.getItem("quizUserEmail");
-  
+
     try {
-      const response = await fetch("https://best-brain-contest-backend.onrender.com/api/quiz/submit", {
-      // const response = await fetch("http://localhost:5000/api/quiz/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          answers,
-          email,
-        }),
-      });
-  
+      const response = await fetch(
+        "https://best-brain-contest-backend.onrender.com/api/quiz/submit",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ answers, email }),
+        }
+      );
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         setError(data.message || "Failed to submit quiz");
         throw new Error(data.message);
       }
-  
+
       setScoreData(data);
       localStorage.removeItem("quizAnswers");
-  
+
       alert("Your score has been mailed to you.");
       navigate("/", { replace: true });
-  
     } catch (error) {
       console.error("Submission error:", error);
       setHasSubmitted(false);
       localStorage.setItem("hasSubmitted", "false");
+    } finally {
+      setSubmitting(false);
     }
-  };
-  
+  }, [answers, hasSubmitted, navigate]);
+
   useEffect(() => {
     const fetchQuestions = async () => {
       setLoading(true);
@@ -109,12 +109,14 @@ const QuizInProgress = () => {
 
       if (remainingTime <= 0) {
         clearInterval(quizTimer);
-        navigate("/");
+        (async () => {
+          await handleSubmit();
+        })();
       }
     }, 1000);
 
     return () => clearInterval(quizTimer);
-  }, [navigate]);
+  }, [navigate, handleSubmit]);
 
   useEffect(() => {
     localStorage.setItem("quizAnswers", JSON.stringify(answers));
@@ -185,7 +187,7 @@ const QuizInProgress = () => {
                           <input
                             type="checkbox"
                             checked={selected.includes(option)}
-                            disabled={hasSubmitted}
+                            disabled={hasSubmitted || submitting}
                             onChange={() => handleSelect(q._id, option)}
                             className="form-checkbox h-5 w-5 text-blue-600"
                           />
@@ -201,7 +203,7 @@ const QuizInProgress = () => {
                       return (
                         <button
                           key={option}
-                          disabled={hasSubmitted}
+                          disabled={hasSubmitted || submitting}
                           className={`p-2 border rounded-lg text-left transition hover:bg-gray-100 ${
                             isSelected ? "bg-blue-500 text-white" : ""
                           }`}
@@ -228,10 +230,10 @@ const QuizInProgress = () => {
           <div className="mt-6 text-center">
             <button
               onClick={handleSubmit}
-              disabled={hasSubmitted}
+              disabled={hasSubmitted || submitting}
               className="px-6 py-3 bg-green-600 text-white font-bold rounded hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
             >
-              {hasSubmitted ? "Submitting..." : "Submit Quiz"}
+              {hasSubmitted || submitting ? "Submitting..." : "Submit Quiz"}
             </button>
           </div>
         )}

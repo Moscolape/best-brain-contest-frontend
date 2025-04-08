@@ -36,7 +36,7 @@ const AllParticipants: React.FC = () => {
       setError(null);
       try {
         const res = await fetch(
-          `http://localhost:5000/api/quiz-participants?page=${currentPage}&limit=${limit}`
+          `https://best-brain-contest-backend.onrender.com/api/quiz-participants?page=${currentPage}&limit=${limit}`
         );
         const data = await res.json();
 
