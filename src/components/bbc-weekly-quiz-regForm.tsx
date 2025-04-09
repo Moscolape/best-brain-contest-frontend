@@ -81,7 +81,11 @@ const WeeklyQuizRegForm: React.FC = () => {
     <PageWrapper>
       <div className="p-6 sm:bg-gray-100 rounded-md shadow-lg max-w-3xl mx-auto sm:mt-30 font-Montserrat">
         <div className="sm:flex justify-center items-center">
-          <img src={logo} alt="logo" className="sm:w-40 w-20 h-15 sm:h-30 sm:mx-0 mx-auto" />
+          <img
+            src={logo}
+            alt="logo"
+            className="sm:w-40 w-20 h-15 sm:h-30 sm:mx-0 mx-auto"
+          />
           <div>
             <h2
               className="sm:text-3xl text-2xl font-bold sm:mb-4 font-Prism text-center"
@@ -153,7 +157,14 @@ const WeeklyQuizRegForm: React.FC = () => {
           <label>Date of Birth</label>
           <input
             type="text"
-            {...register("dob", { required: "Date of Birth is required" })}
+            {...register("dob", {
+              required: "Date of Birth is required",
+              pattern: {
+                value:
+                  /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d{2}$/,
+                message: "Date must be in DD-MM-YYYY format",
+              },
+            })}
             placeholder="DD-MM-YYYY e.g. 30-01-1985"
             className="w-full p-3 border rounded-lg"
           />
@@ -173,14 +184,23 @@ const WeeklyQuizRegForm: React.FC = () => {
             <p className="text-red-500">{errors.myClass.message}</p>
           )}
 
-          <label>Phone Number (WhatsApp)</label>
+          <label>Phone Number (must be a WhatsApp number)</label>
           <input
             {...register("phoneNumber", {
               required: "Phone number is required",
             })}
             placeholder="Phone Number"
             className="w-full p-3 border rounded-lg"
+            inputMode="numeric"
+            onInput={(e) => {
+              const input = e.target as HTMLInputElement;
+              input.value = input.value.replace(/\D/g, "").slice(0, 11);
+            }}
           />
+          {errors.phoneNumber && (
+            <p className="text-red-500">{errors.phoneNumber.message}</p>
+          )}
+
           {errors.phoneNumber && (
             <p className="text-red-500">{errors.phoneNumber.message}</p>
           )}
@@ -272,6 +292,11 @@ const WeeklyQuizRegForm: React.FC = () => {
             })}
             placeholder="Phone number of contact person"
             className="w-full p-3 border rounded-lg"
+            inputMode="numeric"
+            onInput={(e) => {
+              const input = e.target as HTMLInputElement;
+              input.value = input.value.replace(/\D/g, "").slice(0, 11);
+            }}
           />
           {errors.schoolNumber && (
             <p className="text-red-500">{errors.schoolNumber.message}</p>
