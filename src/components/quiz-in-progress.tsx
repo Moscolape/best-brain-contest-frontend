@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "./pageWrapper";
+import Lottie from "lottie-react";
+import confettiAnimation from "../utils/Animation - 1744283286259.json";
 
 const QUIZ_DURATION = 10 * 60 * 1000;
 
@@ -32,6 +34,21 @@ const QuizInProgress = () => {
   );
   const [error, setError] = useState("");
 
+  const fullAnswers = useMemo(() => {
+    const result: { [key: string]: string | string[] } = {};
+
+    for (const question of questions) {
+      const userAnswer = answers[question._id];
+      if (userAnswer !== undefined) {
+        result[question._id] = userAnswer;
+      } else {
+        result[question._id] = question.type === "multiple-choice" ? [] : "";
+      }
+    }
+
+    return result;
+  }, [questions, answers]);
+
   const handleSubmit = useCallback(async () => {
     if (hasSubmitted) return;
 
@@ -41,14 +58,16 @@ const QuizInProgress = () => {
     setError("");
 
     const email = localStorage.getItem("quizUserEmail");
+    console.log(fullAnswers);
 
     try {
       const response = await fetch(
         "https://best-brain-contest-backend.onrender.com/api/quiz/submit",
+        // "http://localhost:5000/api/quiz/submit",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ answers, email }),
+          body: JSON.stringify({ answers: fullAnswers, email }),
         }
       );
 
@@ -61,9 +80,6 @@ const QuizInProgress = () => {
 
       setScoreData(data);
       localStorage.removeItem("quizAnswers");
-
-      alert("Your score has been mailed to you.");
-      navigate("/", { replace: true });
     } catch (error) {
       console.error("Submission error:", error);
       setHasSubmitted(false);
@@ -71,7 +87,7 @@ const QuizInProgress = () => {
     } finally {
       setSubmitting(false);
     }
-  }, [answers, hasSubmitted, navigate]);
+  }, [fullAnswers, hasSubmitted]);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -109,14 +125,24 @@ const QuizInProgress = () => {
 
       if (remainingTime <= 0) {
         clearInterval(quizTimer);
-        (async () => {
-          await handleSubmit();
-        })();
+
+        const hasAnyAnswer = Object.values(answers).some((value) => {
+          if (Array.isArray(value)) return value.length > 0;
+          return value !== "";
+        });
+
+        if (hasAnyAnswer) {
+          (async () => {
+            await handleSubmit();
+          })();
+        } else {
+          console.log("Quiz ended but no answers were submitted.");
+        }
       }
     }, 1000);
 
     return () => clearInterval(quizTimer);
-  }, [navigate, handleSubmit]);
+  }, [navigate, handleSubmit, answers]);
 
   useEffect(() => {
     localStorage.setItem("quizAnswers", JSON.stringify(answers));
@@ -233,20 +259,51 @@ const QuizInProgress = () => {
               disabled={hasSubmitted || submitting}
               className="px-6 py-3 bg-green-600 text-white font-bold rounded hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
             >
-              {hasSubmitted || submitting ? "Submitting..." : "Submit Quiz"}
+              {submitting
+                ? "Submitting..."
+                : hasSubmitted
+                ? "Submitted"
+                : "Submit Quiz"}
             </button>
           </div>
         )}
 
-        {/* {scoreData && (
-          <div className="mt-6 text-center">
-            <h3 className="text-xl font-semibold text-blue-600">Your Score:</h3>
-            <p className="text-lg">
-              {scoreData.score} / {scoreData.totalPoints} (
-              {scoreData.percentage}%)
-            </p>
+        {scoreData && (
+          <div className="w-screen h-screen bg-[#00000090] flex items-center justify-center z-50 fixed top-0 left-0">
+            <div className="bg-white sm:w-[35%] w-4/5 m-auto rounded-lg py-10 animate-fadeDownFast max-h-[90vh] overflow-y-auto relative text-center font-Montserrat">
+              <div className="absolute inset-0 flex justify-center items-start pointer-events-none z-20">
+                <Lottie
+                  animationData={confettiAnimation}
+                  loop={true}
+                  autoplay
+                  style={{ height: 200 }}
+                />
+              </div>
+              <div className="relative z-10">
+                <h2 className="text-3xl font-bold text-green-600 mb-4">
+                  🎉 Congratulations!
+                </h2>
+                <p className="text-xl font-semibold mb-2">
+                  You scored{" "}
+                  <span className="text-blue-600">{scoreData.score}</span> out
+                  of{" "}
+                  <span className="text-blue-600">
+                    {scoreData.totalPoints} points
+                  </span>
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  navigate("/", { replace: true });
+                  // localStorage.removeItem("hasSubmitted");
+                }}
+                className="mt-6 px-6 py-3 bg-blue-600 text-white font-bold rounded hover:bg-blue-900 transition cursor-pointer"
+              >
+                Okay
+              </button>
+            </div>
           </div>
-        )} */}
+        )}
       </div>
     </PageWrapper>
   );

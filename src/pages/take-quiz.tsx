@@ -77,9 +77,9 @@ const TakeQuiz = () => {
     <PageWrapper>
       <div className="sm:w-4/5 mx-auto px-4 sm:py-8 font-Montserrat">
         {!quizReady ? (
-          <div className="text-center mt-10">
-            <h1 className="text-4xl font-bold">Quiz starts in:</h1>
-            <p className="text-5xl mt-4 font-mono">{formatTime(timeLeft)}</p>
+          <div className="text-center mt-40 sm:mt-10">
+            <h1 className="text-3xl sm:text-5xl font-bold">Quiz starts in:</h1>
+            <p className="text-2xl sm:text-5xl mt-4 font-mono">{formatTime(timeLeft)}</p>
           </div>
         ) : (
           <div className="w-full max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg font-Montserrat">

@@ -1,8 +1,9 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import "./App.css";
 import ProtectedRoute from "./components/protected-routes";
+import TimeRestrictedRoute from "./components/timeRestrictedRoute";
 
 const Home = lazy(() => import("./pages/home"));
 const About = lazy(() => import("./pages/about"));
@@ -51,6 +52,24 @@ const AllParticipants = lazy(
 );
 
 function App() {
+  useEffect(() => {
+    const checkResetTime = () => {
+      const now = new Date();
+      const currentDay = now.getDay();
+      const currentHour = now.getHours();
+
+      if (currentDay === 6 && currentHour === 18) {
+        localStorage.removeItem("hasSubmitted");
+      }
+    };
+
+    checkResetTime();
+
+    const interval = setInterval(checkResetTime, 5 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Suspense
       fallback={
@@ -82,7 +101,16 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="/take-quiz/questions" element={<QuizInProgress />} />
+          {/* <Route path="/take-quiz/questions" element={<QuizInProgress />} /> */}
+
+          <Route
+            path="/take-quiz/questions"
+            element={
+              <TimeRestrictedRoute>
+                <QuizInProgress />
+              </TimeRestrictedRoute>
+            }
+          />
 
           {/* <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/login" element={<Login />} />
