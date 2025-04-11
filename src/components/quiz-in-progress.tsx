@@ -169,7 +169,7 @@ const QuizInProgress = () => {
   };
 
   const formatTime = (ms: number) => {
-    if (ms <= 0) return "00m 00s";
+    if (ms <= 0 || hasSubmitted) return "00m 00s";
     const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((ms % (1000 * 60)) / 1000);
     return `${minutes}m ${seconds}s`;
@@ -291,6 +291,7 @@ const QuizInProgress = () => {
                     {scoreData.totalPoints} points
                   </span>
                 </p>
+                <p>Check your mail for more details!!</p>
               </div>
               <button
                 onClick={() => {
