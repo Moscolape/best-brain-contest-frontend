@@ -123,7 +123,7 @@ const QuizSubmissions: React.FC<QuizSubmissionsProps> = ({
                   Class
                 </th>
                 <th className="px-4 py-2 border-b text-left text-gray-700">
-                  Percentage
+                  Score
                 </th>
                 <th className="px-4 py-2 border-b text-left text-gray-700">
                   Submitted At
@@ -149,7 +149,7 @@ const QuizSubmissions: React.FC<QuizSubmissionsProps> = ({
                     {submission.email.myClass}
                   </td>
                   <td className="px-4 py-2 border-b text-gray-800">
-                    {submission.percentage}%
+                    {submission.score}pts
                   </td>
                   <td className="px-4 py-2 border-b text-gray-800">
                     {new Date(submission.submittedAt).toLocaleString()}
