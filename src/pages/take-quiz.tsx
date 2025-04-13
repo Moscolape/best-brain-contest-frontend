@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PageWrapper from "../components/pageWrapper";
 import initializeAOS from "../utils/aos-init";
 
-const TARGET_DATE = new Date("April 12, 2025 18:00:00").getTime();
+const TARGET_DATE = new Date("April 19, 2025 18:00:00").getTime();
 
 const TakeQuiz = () => {
   const navigate = useNavigate();
