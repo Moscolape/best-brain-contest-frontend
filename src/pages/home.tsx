@@ -155,7 +155,7 @@ const Home = () => {
           scholarship programs, quiz competitions, spelling bees, and more. Our
           mission is to make quality education accessible to all, nurturing the
           minds of future leaders and innovators.{" "}
-          <Link to={"/about"}>
+          <Link to={"/about-us"}>
             <span className="font-bold text-[#ffcc2a]">Read more...</span>
           </Link>
         </p>
