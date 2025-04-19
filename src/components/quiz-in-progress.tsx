@@ -115,7 +115,7 @@ const QuizInProgress = () => {
   }, []);
 
   useEffect(() => {
-    const targetTime = new Date("April 19, 2025 18:00:00").getTime();
+    const targetTime = new Date("April 26, 2025 18:00:00").getTime();
     const endTime = targetTime + QUIZ_DURATION;
 
     const quizTimer = setInterval(() => {
