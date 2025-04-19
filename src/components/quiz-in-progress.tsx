@@ -103,7 +103,7 @@ const QuizInProgress = () => {
           throw new Error(data.message);
         }
 
-        setQuestions(data);
+        setQuestions(data.questions);
       } catch (error) {
         console.error("Error fetching questions:", error);
       } finally {
@@ -296,7 +296,6 @@ const QuizInProgress = () => {
               <button
                 onClick={() => {
                   navigate("/", { replace: true });
-                  // localStorage.removeItem("hasSubmitted");
                 }}
                 className="mt-6 px-6 py-3 bg-blue-600 text-white font-bold rounded hover:bg-blue-900 transition cursor-pointer"
               >

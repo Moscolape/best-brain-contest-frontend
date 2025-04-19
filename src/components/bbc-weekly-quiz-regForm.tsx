@@ -201,10 +201,6 @@ const WeeklyQuizRegForm: React.FC = () => {
             <p className="text-red-500">{errors.phoneNumber.message}</p>
           )}
 
-          {errors.phoneNumber && (
-            <p className="text-red-500">{errors.phoneNumber.message}</p>
-          )}
-
           <label>Email Address</label>
           <input
             type="email"
@@ -219,7 +215,7 @@ const WeeklyQuizRegForm: React.FC = () => {
           <label>Facebook Name</label>
           <input
             {...register("facebookName", {
-              required: "your facebook name is required",
+              required: "Your facebook name is required",
             })}
             placeholder="Your facebook name"
             className="w-full p-3 border rounded-lg"
