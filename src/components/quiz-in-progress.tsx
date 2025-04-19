@@ -4,7 +4,7 @@ import PageWrapper from "./pageWrapper";
 import Lottie from "lottie-react";
 import confettiAnimation from "../utils/Animation - 1744283286259.json";
 
-const QUIZ_DURATION = 10 * 60 * 1000;
+const QUIZ_DURATION = 30 * 60 * 1000;
 
 type Question = {
   _id: string;
@@ -193,7 +193,7 @@ const QuizInProgress = () => {
             <div className="w-8 h-8 border-4 border-[#071125] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="mt-4">
+          <div className="mt-4 nocopy">
             {questions.map((q, idx) => (
               <div key={q._id} className="mb-6">
                 <p className="font-semibold">

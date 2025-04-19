@@ -3,6 +3,12 @@
   transition: 0.2s ease-in-out all;
 }
 
+.nocopy {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 /* DM Sans */
 .font-DM-Sans {
   font-family: 'DM Sans', sans-serif;
