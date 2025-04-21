@@ -41,6 +41,8 @@ import winner6 from "../assets/winner6.jpeg";
 import notAvailableYet from "../assets/undraw_no-data_ig65.svg";
 import dipfHeader from "../assets/NEW DIPF.png";
 import bbcFooter from "../assets/BBC FOOTER.png";
+import champ1 from "../assets/Week1 Champ.jpeg";
+import champ2 from "../assets/Week2 Champ.jpeg";
 
 
 export {
@@ -86,5 +88,7 @@ export {
   winner6,
   notAvailableYet,
   dipfHeader,
-  bbcFooter
+  bbcFooter,
+  champ1,
+  champ2
 };

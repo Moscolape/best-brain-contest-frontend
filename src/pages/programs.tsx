@@ -118,7 +118,7 @@ const programsData: Program[] = [
         items: [
           { title: "Weekly Quiz Registration Form", details: [] },
           { title: "About The Quiz", details: [] },
-          { title: "Photos of our Champions", details: [] },
+          { title: "Our Weekly Champions", details: [] },
         ],
       },
     ],
@@ -164,11 +164,14 @@ const ProgramItem: React.FC<ProgramItemProps> = ({ title, details }) => {
     if (title.toLowerCase().includes("astc")) {
       return "/programs/2025-anambra-state-teachers-competition-registration-form";
     }
-    if (title.toLowerCase().includes("weekly")) {
+    if (title.toLowerCase() === "weekly quiz registration form") {
       return "/programs/bbc-weekly-online-quiz-registration-form";
     }
     if (title.toLowerCase() === "about the quiz") {
       return "/programs/about-bbc-weekly-online-quiz";
+    }
+    if (title.toLowerCase() === "our weekly champions") {
+      return "/programs/weekly-quiz-champions";
     }
     return null;
   };

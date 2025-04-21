@@ -43,6 +43,7 @@ const ScholarshipBeneficiaries2024 = lazy(
   () => import("./components/2024-scholarship-beneficiaries")
 );
 const AboutBBCQuiz = lazy(() => import("./components/about-bbc-weekly-quiz"));
+const WeeklyQuizChampions = lazy(() => import("./components/weekly-quiz-champions"));
 
 const TakeQuiz = lazy(() => import("./pages/take-quiz"));
 const QuizInProgress = lazy(() => import("./components/quiz-in-progress"));
@@ -123,6 +124,10 @@ function App() {
           <Route
             path="/programs/about-bbc-weekly-online-quiz"
             element={<AboutBBCQuiz />}
+          />
+          <Route
+            path="/programs/weekly-quiz-champions"
+            element={<WeeklyQuizChampions />}
           />
 
           <Route
