@@ -4,7 +4,7 @@ import { champ1, champ2 } from "../constants/assets";
 
 const champions = [
   {
-    week: "Week 1: 2025-04-12",
+    week: "Week 1 (2025-04-12)",
     name: "Christopher Johnpaul",
     school: "College of Immaculate Conception",
     phone: "08122390753",
@@ -16,7 +16,7 @@ const champions = [
     image: champ1,
   },
   {
-    week: "Week 2: 2025-04-19",
+    week: "Week 2 (2025-04-19)",
     name: "Rebecca Ajayi",
     school: "Iba Housing Estate Secondary School ",
     phone: "07062432286",
@@ -49,7 +49,7 @@ const WeeklyQuizChampions: React.FC = () => {
                   className="sm:w-48 sm:h-48 h-24 w-24 object-cover rounded-full"
                 />
                 <div>
-                  <h3 className="text-xl font-semibold underline">{champion.week}</h3>
+                  <h3 className="text-xl font-semibold">{champion.week}</h3>
                   <p className="text-lg text-gray-600 my-1 font-bold">{champion.name}</p>
                   <p className="text-sm text-gray-500">{champion.school}</p>
                 </div>
