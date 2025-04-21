@@ -7,7 +7,6 @@ const champions = [
     week: "Week 1 (2025-04-12)",
     name: "Christopher Johnpaul",
     school: "College of Immaculate Conception",
-    phone: "08122390753",
     gender: "Male",
     class: "SS3",
     score: 10,
@@ -19,7 +18,6 @@ const champions = [
     week: "Week 2 (2025-04-19)",
     name: "Rebecca Ajayi",
     school: "Iba Housing Estate Secondary School ",
-    phone: "07062432286",
     gender: "Female",
     class: "SS2",
     score: 10,
@@ -61,9 +59,6 @@ const WeeklyQuizChampions: React.FC = () => {
                 </p>
                 <p className="mb-1">
                   <span className="font-semibold">Class:</span> {champion.class}
-                </p>
-                <p className="mb-1">
-                  <span className="font-semibold">Phone:</span> {champion.phone}
                 </p>
                 <p className="mb-1">
                   <span className="font-semibold">Gender:</span> {champion.gender}
