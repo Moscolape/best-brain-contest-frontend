@@ -49,9 +49,9 @@ const WeeklyQuizChampions: React.FC = () => {
                   className="sm:w-48 sm:h-48 h-24 w-24 object-cover rounded-full"
                 />
                 <div>
-                  <h3 className="text-xl font-semibold">{champion.name}</h3>
-                  <p className="text-sm sm:text-[1rem] text-gray-600 my-1 font-bold">{champion.school}</p>
-                  <p className="text-sm text-gray-500">{champion.week}</p>
+                  <h3 className="text-xl font-semibold underline">{champion.week}</h3>
+                  <p className="text-lg text-gray-600 my-1 font-bold">{champion.name}</p>
+                  <p className="text-sm text-gray-500">{champion.school}</p>
                 </div>
               </div>
 
