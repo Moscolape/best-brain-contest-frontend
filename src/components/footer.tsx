@@ -74,7 +74,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-start border-t-2 border-white p-6">
+      <div className="flex justify-between items-start border-t-2 border-white sm:p-6 p-3">
         {/* Footer Text */}
         <div className="sm:w-1/3">
           <p className="sm:px-0 mo:px-7 sm:text-body2 mo:text-sub">
