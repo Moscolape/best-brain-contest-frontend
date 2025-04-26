@@ -94,7 +94,7 @@ const QuizInProgress = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://best-brain-contest-backend.onrender.com/api/admin/questions?day=2025-04-19"
+          "https://best-brain-contest-backend.onrender.com/api/admin/questions?day=2025-04-26"
         );
         const data = await response.json();
 
