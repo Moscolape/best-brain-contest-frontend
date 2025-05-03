@@ -4,7 +4,7 @@ import PageWrapper from "./pageWrapper";
 import Lottie from "lottie-react";
 import confettiAnimation from "../utils/Animation - 1744283286259.json";
 
-const QUIZ_DURATION = 10 * 60 * 1000;
+const QUIZ_DURATION = 15 * 60 * 1000;
 
 type Question = {
   _id: string;
