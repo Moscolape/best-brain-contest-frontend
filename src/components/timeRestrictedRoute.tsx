@@ -12,7 +12,7 @@ const TimeRestrictedRoute: React.FC<PageWrapperProps> = ({ children }) => {
   const minutes = now.getMinutes();
 
   const isSaturday = day === 6;
-  const isBetween6And611 = hour === 18 && minutes >= 0 && minutes <= 11;
+  const isBetween6And611 = hour === 19 && minutes >= 0 && minutes <= 11;
 
   if (isSaturday && isBetween6And611) {
     return children;

@@ -59,7 +59,7 @@ function App() {
       const currentDay = now.getDay();
       const currentHour = now.getHours();
 
-      if (currentDay === 6 && currentHour === 18) {
+      if (currentDay === 6 && currentHour === 19) {
         localStorage.removeItem("hasSubmitted");
       }
     };
