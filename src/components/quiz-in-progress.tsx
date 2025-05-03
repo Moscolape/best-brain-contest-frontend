@@ -136,7 +136,7 @@ const QuizInProgress = () => {
             await handleSubmit();
           })();
         } else {
-          console.log("Quiz ended but no answers were submitted.");
+          alert("Quiz ended but no answers were submitted.");
         }
       }
     }, 1000);
