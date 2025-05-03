@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import "./App.css";
 import ProtectedRoute from "./components/protected-routes";
-import TimeRestrictedRoute from "./components/timeRestrictedRoute";
+// import TimeRestrictedRoute from "./components/timeRestrictedRoute";
 
 const Home = lazy(() => import("./pages/home"));
 const About = lazy(() => import("./pages/about"));
@@ -102,8 +102,8 @@ function App() {
             </Route>
           </Route>
 
-          {/* <Route path="/take-quiz/questions" element={<QuizInProgress />} /> */}
-
+          <Route path="/take-quiz/questions" element={<QuizInProgress />} />
+{/* 
           <Route
             path="/take-quiz/questions"
             element={
@@ -111,7 +111,7 @@ function App() {
                 <QuizInProgress />
               </TimeRestrictedRoute>
             }
-          />
+          /> */}
 
           {/* <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/login" element={<Login />} />
