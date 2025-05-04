@@ -25,6 +25,28 @@ const champions = [
     location: "Ojo, Iba, Lagos",
     image: champ2
   },
+  {
+    week: "Week 3 (2025-04-26)",
+    name: "Aji Samuel Terfan",
+    school: "SamJosh Best Brains International Academy Makurdi ",
+    phone: "07076656018",
+    gender: "Male",
+    class: "SS2",
+    score: 10,
+    timeCompleted: "2m 03s",
+    location: "Ushongo, Makurdi, Benue"
+  },
+  {
+    week: "Week 4 (2025-05-03)",
+    name: "Salaudeen Abdulkabir",
+    school: "Command Day Secondary school ",
+    phone: "07039799592",
+    gender: "Male",
+    class: "SS3",
+    score: 10,
+    timeCompleted: "2m 38s",
+    location: "Ojo, Ojo, Lagos"
+  }
 ];
 
 const WeeklyQuizChampions: React.FC = () => {
