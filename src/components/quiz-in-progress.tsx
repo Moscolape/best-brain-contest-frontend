@@ -4,7 +4,7 @@ import PageWrapper from "./pageWrapper";
 import Lottie from "lottie-react";
 import confettiAnimation from "../utils/Animation - 1744283286259.json";
 
-const QUIZ_DURATION = 19 * 60 * 1000;
+const QUIZ_DURATION = 10 * 60 * 1000;
 
 type Question = {
   _id: string;
@@ -94,7 +94,7 @@ const QuizInProgress = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://best-brain-contest-backend.onrender.com/api/admin/questions?day=2025-05-03"
+          "https://best-brain-contest-backend.onrender.com/api/admin/questions?day=2025-05-10"
         );
         const data = await response.json();
 
@@ -115,7 +115,7 @@ const QuizInProgress = () => {
   }, []);
 
   useEffect(() => {
-    const targetTime = new Date("May 03, 2025 19:00:00").getTime();
+    const targetTime = new Date("May 10, 2025 18:00:00").getTime();
     const endTime = targetTime + QUIZ_DURATION;
 
     const quizTimer = setInterval(() => {
