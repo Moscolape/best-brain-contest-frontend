@@ -48,7 +48,7 @@ const champions = [
     location: "Ojo, Ojo, Lagos"
   },
   {
-    week: "Week 4 (2025-05-10)",
+    week: "Week 5 (2025-05-10)",
     name: "Salaudeen Abdulkabir",
     school: "Command Day Secondary school ",
     phone: "07039799592",
