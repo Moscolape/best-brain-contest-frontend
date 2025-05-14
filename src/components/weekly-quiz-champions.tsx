@@ -46,6 +46,17 @@ const champions = [
     score: 10,
     timeCompleted: "2m 38s",
     location: "Ojo, Ojo, Lagos"
+  },
+  {
+    week: "Week 4 (2025-05-10)",
+    name: "Salaudeen Abdulkabir",
+    school: "Command Day Secondary school ",
+    phone: "07039799592",
+    gender: "Male",
+    class: "SS3",
+    score: 10,
+    timeCompleted: "1m 57s",
+    location: "Ojo, Ojo, Lagos"
   }
 ];
 

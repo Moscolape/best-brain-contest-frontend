@@ -2,7 +2,14 @@ import { useState } from "react";
 import QuizSubmissions from "./quiz-submissions";
 
 const CheckSubmissions = () => {
-  const [weekIdentifier, setWeekIdentifier] = useState<string>("2025-04-07");
+  const getTodayDateString = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  };
+
+  const [weekIdentifier, setWeekIdentifier] = useState<string>(
+    getTodayDateString()
+  );
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWeekIdentifier(event.target.value);
