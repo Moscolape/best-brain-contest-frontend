@@ -20,6 +20,7 @@ const QuizInProgress = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string | string[] }>(
     () => JSON.parse(localStorage.getItem("quizAnswers") || "{}")
   );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const [scoreData, setScoreData] = useState<null | {
     score: number;
@@ -194,17 +195,20 @@ const QuizInProgress = () => {
           </div>
         ) : (
           <div className="mt-4 nocopy">
-            {questions.map((q, idx) => (
-              <div key={q._id} className="mb-6">
+            {questions.length > 0 && (
+              <div key={questions[currentQuestionIndex]._id} className="mb-6">
                 <p className="font-semibold">
-                  {idx + 1}. {q.prompt}
+                  {currentQuestionIndex + 1}.{" "}
+                  {questions[currentQuestionIndex].prompt}
                 </p>
 
-                {q.type === "multiple-choice" ? (
+                {questions[currentQuestionIndex].type === "multiple-choice" ? (
                   <div className="mt-2 space-y-2">
-                    {q.options.map((option) => {
+                    {questions[currentQuestionIndex].options.map((option) => {
                       const selected =
-                        (answers[q._id] as string[] | undefined) || [];
+                        (answers[questions[currentQuestionIndex]._id] as
+                          | string[]
+                          | undefined) || [];
                       return (
                         <label
                           key={option}
@@ -214,7 +218,12 @@ const QuizInProgress = () => {
                             type="checkbox"
                             checked={selected.includes(option)}
                             disabled={hasSubmitted || submitting}
-                            onChange={() => handleSelect(q._id, option)}
+                            onChange={() =>
+                              handleSelect(
+                                questions[currentQuestionIndex]._id,
+                                option
+                              )
+                            }
                             className="form-checkbox h-5 w-5 text-blue-600"
                           />
                           <span>{option}</span>
@@ -224,8 +233,9 @@ const QuizInProgress = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-2 mt-2">
-                    {q.options.map((option) => {
-                      const isSelected = answers[q._id] === option;
+                    {questions[currentQuestionIndex].options.map((option) => {
+                      const isSelected =
+                        answers[questions[currentQuestionIndex]._id] === option;
                       return (
                         <button
                           key={option}
@@ -233,7 +243,12 @@ const QuizInProgress = () => {
                           className={`p-2 border rounded-lg text-left transition hover:bg-gray-100 ${
                             isSelected ? "bg-blue-500 text-white" : ""
                           }`}
-                          onClick={() => handleSelect(q._id, option)}
+                          onClick={() =>
+                            handleSelect(
+                              questions[currentQuestionIndex]._id,
+                              option
+                            )
+                          }
                         >
                           {option}
                         </button>
@@ -242,10 +257,9 @@ const QuizInProgress = () => {
                   </div>
                 )}
               </div>
-            ))}
+            )}
           </div>
         )}
-
         {error && (
           <div className="mt-4 text-red-600 font-medium text-center">
             {error}
@@ -253,18 +267,36 @@ const QuizInProgress = () => {
         )}
 
         {!loading && questions.length > 0 && !scoreData && (
-          <div className="mt-6 text-center">
+          <div className="mt-6 flex justify-between">
             <button
-              onClick={handleSubmit}
-              disabled={hasSubmitted || submitting}
-              className="px-6 py-3 bg-green-600 text-white font-bold rounded hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
+              onClick={() => setCurrentQuestionIndex((prev) => prev - 1)}
+              disabled={currentQuestionIndex === 0}
+              className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
             >
-              {submitting
-                ? "Submitting..."
-                : hasSubmitted
-                ? "Submitted"
-                : "Submit Quiz"}
+              Previous
             </button>
+
+            {currentQuestionIndex === questions.length - 1 ? (
+              <button
+                onClick={handleSubmit}
+                disabled={hasSubmitted || submitting}
+                className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                {submitting
+                  ? "Submitting..."
+                  : hasSubmitted
+                  ? "Submitted"
+                  : "Submit Quiz"}
+              </button>
+            ) : (
+              <button
+                onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}
+                disabled={currentQuestionIndex === questions.length - 1}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+              >
+                Next
+              </button>
+            )}
           </div>
         )}
 
