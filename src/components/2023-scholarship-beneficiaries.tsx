@@ -69,7 +69,6 @@ interface TableProps {
 // const API_BASE_URL = "http://localhost:5000/api";
 const API_BASE_URL = "https://best-brain-contest-backend.onrender.com/api";
 
-
 const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -93,7 +92,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
 
   // Check if user is authenticated
   const authToken = localStorage.getItem("authToken");
-  const {roleAccess} = useAuth();
+  const { roleAccess } = useAuth();
 
   // Memoized function to prevent unnecessary re-creation
   const fetchBeneficiaries = useCallback(async () => {
@@ -106,7 +105,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
         perPage: "10",
         state: selectedState || "Abia",
         sortBy: sortBy || "",
-        year: "2023"
+        year: "2023",
       });
 
       const response = await fetch(
@@ -472,9 +471,10 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="sm:w-[300%] w-[500%] border-collapse border border-gray-300">
+              <table className="sm:w-[300%] w-[900%] border-collapse border border-gray-300">
                 <thead>
                   <tr className="bg-gray-300 text-left">
+                    <th className="border p-2">S/No.</th>
                     <th className="border p-2">Beneficiary Name</th>
                     <th className="border p-2">Code No</th>
                     <th className="border p-2">School</th>
@@ -509,6 +509,9 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
                             : "bg-gray-200"
                         }`}
                       >
+                        <td className="border p-2">
+                          {(currentPage - 1) * 10 + index + 1}
+                        </td>
                         <td className="border p-2">
                           {beneficiary.beneficiaryName}
                         </td>
@@ -662,7 +665,7 @@ const BeneficiariesTable2023: React.FC<TableProps> = ({ show }) => {
           </>
         )}
       </div>
-      {(updateHistory && updateHistory.length > 0) && (
+      {updateHistory && updateHistory.length > 0 && (
         <div className="p-6 sm:bg-gray-100 rounded-md sm:shadow-lg max-w-5xl mx-auto font-Montserrat mt-10">
           <h1>
             <b>Update History for {updatedCode}</b>
