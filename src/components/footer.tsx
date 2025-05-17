@@ -45,7 +45,7 @@ export default function Footer() {
   const location = useLocation();
 
   return (
-    <div className={`w-full bg-[#071125] text-white text-body1 ${location.pathname.includes("admin") ? 'mt-0' : 'mt-20'}`}>
+    <div className={`w-full bg-[#071125] text-white font-Montserrat ${location.pathname.includes("admin") ? 'mt-0' : 'mt-20'}`}>
       <div className="flex sm:flex-row flex-col justify-between items-start sm:p-6 p-3">
         <div className="sm:w-1/3" data-aos="fade-up">
           <h1 className="text-lg font-bold">LOCATE US</h1>

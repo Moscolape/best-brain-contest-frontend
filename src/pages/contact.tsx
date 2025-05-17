@@ -62,8 +62,17 @@ const Contact: React.FC = () => {
       <div className="w-[90%] mx-auto sm:mt-32 flex flex-col-reverse sm:grid md:grid-cols-2 gap-10">
         {/* Contact Form */}
         <div className="p-6 bg-gray-100 rounded-md shadow-lg">
-          <h2 className="text-3xl font-bold mb-4 font-Prism" data-aos="fade-left">Get In Touch</h2>
-          <p className="text-gray-800 font-Urbanist" data-aos="fade-left" data-aos-delay={500}>
+          <h2
+            className="text-3xl font-bold mb-4 font-Prism"
+            data-aos="fade-left"
+          >
+            Get In Touch
+          </h2>
+          <p
+            className="text-gray-800 font-Urbanist"
+            data-aos="fade-left"
+            data-aos-delay={500}
+          >
             Reach out to Best Brain Contest for inquiries, feedback, support, or
             collaboration opportunities.
           </p>
@@ -74,7 +83,8 @@ const Contact: React.FC = () => {
               {...register("name", { required: "Name is required" })}
               placeholder="Your Name"
               className="w-full p-2 border rounded placeholder:text-gray-400"
-              data-aos="fade-in" data-aos-delay={1000}
+              data-aos="fade-in"
+              data-aos-delay={1000}
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
@@ -85,7 +95,8 @@ const Contact: React.FC = () => {
               {...register("email", { required: "Email is required" })}
               placeholder="Your Email"
               className="w-full p-2 border rounded placeholder:text-gray-400"
-              data-aos="fade-in" data-aos-delay={1000}
+              data-aos="fade-in"
+              data-aos-delay={1000}
             />
             {errors.email && (
               <p className="text-red-500">{errors.email.message}</p>
@@ -96,7 +107,8 @@ const Contact: React.FC = () => {
               placeholder="Your Message"
               className="w-full p-2 border rounded resize-none placeholder:text-gray-400"
               rows={8}
-              data-aos="fade-in" data-aos-delay={1000}
+              data-aos="fade-in"
+              data-aos-delay={1000}
             />
             {errors.message && (
               <p className="text-red-500">{errors.message.message}</p>
@@ -109,7 +121,11 @@ const Contact: React.FC = () => {
               Send Message
             </button>
           </form>
-          {status && <p className="mt-4 text-center text-green-700 font-medium">{status}</p>}
+          {status && (
+            <p className="mt-4 text-center text-green-700 font-medium">
+              {status}
+            </p>
+          )}
         </div>
 
         {/* Contact Details */}
@@ -148,6 +164,20 @@ const Contact: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div
+        className="w-full h-[300px] md:h-[500px] mt-16"
+        data-aos="fade-up"
+        data-aos-delay={500}
+      >
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2712314922596!2d7.075312974750628!3d6.227926893760229!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1043828948fc4ed5%3A0xb36cf597b082136a!2sTotal%20Filling%20Station!5e0!3m2!1sen!2sng!4v1747497285354!5m2!1sen!2sng"
+          className="w-full h-full"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
       </div>
     </PageWrapper>
   );
