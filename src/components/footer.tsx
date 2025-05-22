@@ -2,6 +2,7 @@ import { FaFacebook, FaMapMarkerAlt, FaInstagram } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import initializeAOS from "../utils/aos-init";
+// import { ArrowUpRight } from "lucide-react";
 
 const socialMediaLinks = [
   {
@@ -45,7 +46,11 @@ export default function Footer() {
   const location = useLocation();
 
   return (
-    <div className={`w-full bg-[#071125] text-white font-Montserrat ${location.pathname.includes("admin") ? 'mt-0' : 'mt-20'}`}>
+    <div
+      className={`w-full bg-[#071125] text-white font-Montserrat ${
+        location.pathname.includes("admin") ? "mt-0" : "mt-20"
+      }`}
+    >
       <div className="flex sm:flex-row flex-col justify-between items-start sm:p-6 p-3">
         <div className="sm:w-1/3" data-aos="fade-up">
           <h1 className="text-lg font-bold">LOCATE US</h1>
@@ -77,7 +82,7 @@ export default function Footer() {
       <div className="flex justify-between items-start border-t-2 border-white sm:p-6 p-3">
         {/* Footer Text */}
         <div className="sm:w-1/3">
-          <p className="sm:px-0 mo:px-7 sm:text-body2 mo:text-sub">
+          <p className="sm:px-0 mo:px-7">
             &copy; 2025 Best Brain Contest. All rights reserved.
           </p>
           <p className="mt-2">
@@ -92,6 +97,21 @@ export default function Footer() {
             </b>
             .
           </p>
+          {/* <p className="flex sm:flex-row flex-col sm:justify-start justify-center items-center">
+            Designed and developed by{" "}
+            <b>
+              <a
+                href="https://chukwunenye-moses-portfolio.vercel.app/portfolio"
+                target="_blank"
+                className="hover:text-[#b58825] "
+              >
+                <span className="flex items-center ml-2">
+                  Chukwunenye Moses{" "}
+                  <ArrowUpRight className="w-5 h-5 border-t border-r ml-2" />
+                </span>
+              </a>
+            </b>
+          </p> */}
         </div>
         <div className="sm:w-1/3 mo:w-1/5 hidden sm:block">
           Follow us on our social media pages below;
