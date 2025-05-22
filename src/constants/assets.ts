@@ -43,7 +43,7 @@ import dipfHeader from "../assets/NEW DIPF.png";
 import bbcFooter from "../assets/BBC FOOTER.png";
 import champ1 from "../assets/Week1 Champ.jpeg";
 import champ2 from "../assets/Week2 Champ.jpeg";
-
+import champ6 from "../assets/champ6.jpeg";
 
 export {
   logo,
@@ -90,5 +90,6 @@ export {
   dipfHeader,
   bbcFooter,
   champ1,
-  champ2
+  champ2,
+  champ6,
 };

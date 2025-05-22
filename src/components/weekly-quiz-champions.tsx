@@ -1,6 +1,6 @@
 import React from "react";
 import PageWrapper from "./pageWrapper";
-import { champ1, champ2 } from "../constants/assets";
+import { champ1, champ2, champ6 } from "../constants/assets";
 
 const champions = [
   {
@@ -23,7 +23,7 @@ const champions = [
     score: 10,
     timeCompleted: "1m 58s",
     location: "Ojo, Iba, Lagos",
-    image: champ2
+    image: champ2,
   },
   {
     week: "Week 3 (2025-04-26)",
@@ -34,7 +34,7 @@ const champions = [
     class: "SS2",
     score: 10,
     timeCompleted: "2m 03s",
-    location: "Ushongo, Makurdi, Benue"
+    location: "Ushongo, Makurdi, Benue",
   },
   {
     week: "Week 4 (2025-05-03)",
@@ -45,7 +45,7 @@ const champions = [
     class: "SS3",
     score: 10,
     timeCompleted: "2m 38s",
-    location: "Ojo, Ojo, Lagos"
+    location: "Ojo, Ojo, Lagos",
   },
   {
     week: "Week 5 (2025-05-10)",
@@ -56,8 +56,19 @@ const champions = [
     class: "SS3",
     score: 10,
     timeCompleted: "1m 57s",
-    location: "Ojo, Ojo, Lagos"
-  }
+    location: "Ojo, Ojo, Lagos",
+  },
+  {
+    week: "Week 6 (2025-05-17)",
+    name: "Christopher Johnpaul",
+    school: "College of Immaculate Conception",
+    gender: "Male",
+    class: "SS3",
+    score: 10,
+    timeCompleted: "2m 27s",
+    location: "Enugu South, Ogui, Enugu",
+    image: champ6,
+  },
 ];
 
 const WeeklyQuizChampions: React.FC = () => {
@@ -81,26 +92,32 @@ const WeeklyQuizChampions: React.FC = () => {
                 />
                 <div>
                   <h3 className="text-xl font-semibold">{champion.week}</h3>
-                  <p className="text-lg text-gray-600 my-1 font-bold">{champion.name}</p>
+                  <p className="text-lg text-gray-600 my-1 font-bold">
+                    {champion.name}
+                  </p>
                   <p className="text-sm text-gray-500">{champion.school}</p>
                 </div>
               </div>
 
               <div className="mt-4 text-sm text-gray-700">
                 <p className="mb-1">
-                  <span className="font-semibold">Location:</span> {champion.location}
+                  <span className="font-semibold">Location:</span>{" "}
+                  {champion.location}
                 </p>
                 <p className="mb-1">
                   <span className="font-semibold">Class:</span> {champion.class}
                 </p>
                 <p className="mb-1">
-                  <span className="font-semibold">Gender:</span> {champion.gender}
+                  <span className="font-semibold">Gender:</span>{" "}
+                  {champion.gender}
                 </p>
                 <p className="mb-1">
-                  <span className="font-semibold">Score:</span> {champion.score}/10
+                  <span className="font-semibold">Score:</span> {champion.score}
+                  /10
                 </p>
                 <p>
-                  <span className="font-semibold">Time Completed:</span> {champion.timeCompleted}
+                  <span className="font-semibold">Time Completed:</span>{" "}
+                  {champion.timeCompleted}
                 </p>
               </div>
             </div>
