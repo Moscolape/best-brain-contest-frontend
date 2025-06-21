@@ -82,30 +82,30 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about-us" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/programs" element={<Programs />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/take-quiz" element={<TakeQuiz />} />
+          <Route path="/bout-us" element={<About />} />
+          <Route path="/ervices" element={<Services />} />
+          <Route path="/rograms" element={<Programs />} />
+          <Route path="/log" element={<Blog />} />
+          <Route path="/ontact" element={<Contact />} />
+          <Route path="/allery" element={<Gallery />} />
+          <Route path="/ake-quiz" element={<TakeQuiz />} />
 
           {/* Protect Admin Routes */}
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
-              <Route path="questions" element={<QuestionList />} />
-              <Route path="questions/new" element={<QuestionForm />} />
-              <Route path="questions/:id" element={<QuestionForm />} />
-              <Route path="quiz-submissions" element={<CheckSubmissions />} />
-              <Route path="quiz-participants" element={<AllParticipants />} />
+              <Route path="uestions" element={<QuestionList />} />
+              <Route path="uestions/new" element={<QuestionForm />} />
+              <Route path="uestions/:id" element={<QuestionForm />} />
+              <Route path="uiz-submissions" element={<CheckSubmissions />} />
+              <Route path="uiz-participants" element={<AllParticipants />} />
             </Route>
           </Route>
 
           {/* <Route path="/take-quiz/questions" element={<QuizInProgress />} /> */}
 
           <Route
-            path="/take-quiz/questions"
+            path="/ake-quiz/questions"
             element={
               <TimeRestrictedRoute>
                 <QuizInProgress />
@@ -114,37 +114,37 @@ function App() {
           />
 
           {/* <Route path="/signup" element={<SignUp />} /> */}
-          <Route path="/login" element={<Login />} />
+          <Route path="/ogin" element={<Login />} />
 
-          <Route path="/scholarship-form" element={<ScholarshipForm />} />
+          <Route path="/cholarship-form" element={<ScholarshipForm />} />
           <Route
-            path="/programs/bbc-weekly-online-quiz-registration-form"
+            path="/rograms/bbc-weekly-online-quiz-registration-form"
             element={<WeeeklyQuizForm />}
           />
           <Route
-            path="/programs/about-bbc-weekly-online-quiz"
+            path="/rograms/about-bbc-weekly-online-quiz"
             element={<AboutBBCQuiz />}
           />
           <Route
-            path="/programs/weekly-quiz-champions"
+            path="/rograms/weekly-quiz-champions"
             element={<WeeklyQuizChampions />}
           />
 
           <Route
-            path="/programs/2025-southeast-teachers-competition-registration-form"
+            path="/rograms/2025-southeast-teachers-competition-registration-form"
             element={<SoutheastTeachersForm />}
           />
           <Route
-            path="/programs/2025-anambra-state-teachers-competition-registration-form"
+            path="/rograms/2025-anambra-state-teachers-competition-registration-form"
             element={<AnambraTeachersForm />}
           />
 
           <Route
-            path="/programs/2023-scholarship-beneficiaries"
+            path="/rograms/2023-scholarship-beneficiaries"
             element={<ScholarshipBeneficiaries2023 show={false} />}
           />
           <Route
-            path="/programs/2024-scholarship-beneficiaries"
+            path="/rograms/2024-scholarship-beneficiaries"
             element={<ScholarshipBeneficiaries2024 show={false} />}
           />
         </Routes>
